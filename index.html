@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collabio - Proje Yönetimi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+            <a href="#" class="nav-item"><i class="fas fa-th"></i> Uygulamalar</a>
+            <a href="#" class="nav-item"><i class="fas fa-tasks"></i> Planlar</a>
+        </div>
+
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
+            <a href="#" class="nav-item"><i class="fas fa-compass"></i> Yeni keşif projesi</a>
+            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
+            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
+            <a href="#" class="nav-item"><i class="fas fa-columns"></i> Gösterge Panoları</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Takımlar</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Kenar çubuğunu özelleştir</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+                
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link active"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    <a href="sayfalar.html" class="nav-link"><i class="fas fa-file"></i> Sayfalar</a>
+                    <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="board-header">
+            <div class="board-header-left">
+                <h2>Görev Panosu</h2>
+            </div>
+            <button onclick="showAddTaskModal('yapilacaklar')" class="add-task-btn">
+                </i> Görev Ekle
+            </button>
+        </div>
+        <div class="board-container">
+            <div class="column" id="yapilacaklar">
+                <div class="column-header">
+                    <div class="column-title">
+                        <h3>YAPILACAKLAR</h3>
+                        <span class="task-count">0</span>
+                    </div>
+                    <button class="column-add-btn" id="add-column-btn-yapilacaklar" title="Yeni sütun ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="task-list">
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-12</span>
+                            <span class="task-priority high"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>İş akışları</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=BT&background=18a0fb&color=fff" class="avatar" title="Bahri Talha Baş">
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-9</span>
+                            <span class="task-priority medium"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>Otomasyon projesinin temel yapısını oluşturmak.</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=MD&background=9c27b0&color=fff" class="avatar" title="Melike Danışmaz">
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-13</span>
+                            <span class="task-priority low"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>deneme</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=MD&background=9c27b0&color=fff" class="avatar" title="Melike Danışmaz">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column" id="devamEdiyor">
+                <div class="column-header">
+                    <div class="column-title">
+                        <h3>DEVAM EDİYOR</h3>
+                        <span class="task-count">0</span>
+                    </div>
+                    <button class="column-add-btn" id="add-column-btn-devamEdiyor" title="Yeni sütun ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="task-list">
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-3</span>
+                            <span class="task-priority high"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>Api geliştirme</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="avatar" title="Ömer Faruk Bingöl">
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-5</span>
+                            <span class="task-priority medium"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>Login Page kodlama</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=CY&background=9c27b0&color=fff" class="avatar" title="Ceren Yolur">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column" id="beklemede">
+                <div class="column-header">
+                    <div class="column-title">
+                        <h3>BEKLEMEDE</h3>
+                        <span class="task-count">0</span>
+                    </div>
+                    <button class="column-add-btn" id="add-column-btn-beklemede" title="Yeni sütun ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="task-list">
+                    <!-- Boş sütun -->
+                </div>
+            </div>
+            
+            <div class="column" id="tamam">
+                <div class="column-header">
+                    <div class="column-title">
+                        <h3>TAMAM</h3>
+                        <span class="task-count">0</span>
+                    </div>
+                    <button class="column-add-btn" id="add-column-btn-tamam" title="Yeni sütun ekle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="task-list">
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-4</span>
+                            <span class="task-priority high"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>UX/UI Tasarımı</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" class="avatar" title="Bedirhan Özmen">
+                        </div>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-card-header">
+                            <span class="task-code">COL-10</span>
+                            <span class="task-priority medium"></span>
+                        </div>
+                        <div class="task-content">
+                            <h4>Frontend Geliştirme</h4>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                            </div>
+                        </div>
+                        <div class="task-footer">
+                            <img src="https://ui-avatars.com/api/?name=AE&background=ff7043&color=fff" class="avatar" title="Arif Emink">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Görev Ekleme Modal -->
+    <div id="taskForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Yeni Görev Ekle</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="newTaskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Başlık</label>
+                    <input type="text" id="taskTitle" required placeholder="Görev başlığı">
+                </div>
+                <div class="form-group">
+                    <label for="taskCode">Kod</label>
+                    <input type="text" id="taskCode" required placeholder="Örn: COL-13">
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="taskAssignee">Atanan Kişi</label>
+                        <select id="taskAssignee" required>
+                            <option value="">Seçiniz...</option>
+                            <option value="Bedirhan Özmen">Bedirhan Özmen</option>
+                            <option value="Ömer Faruk Bingöl">Ömer Faruk Bingöl</option>
+                            <option value="Ceren Yolur">Ceren Yolur</option>
+                            <option value="Emre Kandazoğlu">Emre Kandazoğlu</option>
+                            <option value="Büşra Özer">Büşra Özer</option>
+                            <option value="Arif Emin Köklü">Arif Emin Köklü</option>
+                            <option value="Bahrı Talha Baş">Bahrı Talha Baş</option>
+                            <option value="Enes Taşpınar">Enes Taşpınar</option>
+                        </select>
+                    </div>
+                    <div class="form-group half">
+                        <label for="taskCategory">Kategori</label>
+                        <select id="taskCategory" required>
+                            <option value="">Seçiniz...</option>
+                            <option value="frontend">Frontend</option>
+                            <option value="backend">Backend</option>
+                            <option value="database">Database</option>
+                            <option value="ux/ui">UX/UI</option>
+                            <option value="is analizi">İş Analizi</option>
+                            <option value="test">Test</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="taskDueDate">Bitiş Tarihi</label>
+                        <input type="date" id="taskDueDate" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="taskPriority">Öncelik</label>
+                        <select id="taskPriority" required>
+                            <option value="">Seçiniz...</option>
+                            <option value="high">Yüksek</option>
+                            <option value="medium">Orta</option>
+                            <option value="low">Düşük</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Açıklama</label>
+                    <textarea id="taskDescription" rows="4" placeholder="Görev açıklaması"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeTaskForm()">İptal</button>
+                    <button type="submit" class="btn-primary">Görev Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="board.js"></script>
+</body>
+
+</html>

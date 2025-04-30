@@ -1,0 +1,89 @@
+# 🏄 Windsurf Proje Yönetimi Kuralları (Jira)
+
+Bu projede **Jira** üzerinden takip edilen görevlerin durumu ve iş akışı aşağıdaki gibi tanımlanmıştır. Tüm ekip üyeleri bu kurallara uygun şekilde görevlerini takip etmeli ve güncellemelidir.
+
+---
+
+## 🧰 Kullanılan Teknolojiler
+
+- **React**  
+- **HTML**  
+- **CSS**  
+
+Bu teknolojilerle geliştirilen tüm görevler aşağıda belirtilen sistematiğe göre Jira üzerinden takip edilecektir.
+
+---
+
+## 🗂 Görev Durumları
+
+Görevler üç temel sütun üzerinden takip edilmektedir:
+
+- **🟦 YAPILACAKLAR:** Yeni oluşturulan, henüz başlanmamış görevler.  
+- **🟨 DEVAM EDİYOR:** Üzerinde aktif olarak çalışılan görevler.  
+- **🟩 TAMAM:** Tamamlanmış ve gözden geçirilmiş görevler.  
+
+---
+
+## ✅ Kullanım Kuralları
+
+### 1. Görev Oluşturma
+- Görevler yalnızca ilgili takım üyesi veya proje yöneticisi tarafından oluşturulabilir.  
+- Her görev:
+  - Açıklayıcı ve net bir **başlık** içermelidir.
+  - Altında kısa ama öz bir **açıklama** yer almalıdır.
+  - **Son teslim tarihi** belirtilmelidir.
+  - Görevin **sorumlusu** atanmalıdır.
+
+---
+
+### 2. Görev Taşıma
+- Çalışmaya başlanan görevler **YAPILACAKLAR** sütunundan **DEVAM EDİYOR** sütununa taşınmalıdır.
+- Görev tamamlandığında **TAMAM** sütununa taşınmalıdır.
+- Bir görev “TAMAM” durumuna alınmadan önce test edilmeli, gerekiyorsa kod incelemesinden geçirilmelidir.
+
+---
+
+### 3. Etiketleme & Kodlar
+- Her görevin bir **etiket kodu** olmalıdır (örn. `COL-10`).
+- Etiketler, ilgili **modül** veya **geliştirme alanı** ile ilişkilendirilmelidir.
+  - Örneğin:
+    - `COL-1`: HTML
+    - `COL-2`: CSS
+    - `COL-3`: React
+
+---
+
+### 4. Sorumluluk
+- Her görev yalnızca bir kişiye atanmalıdır.
+- Takım üyeleri sadece **kendi adlarına atanmış** görevler üzerinde çalışmalıdır.
+- Görev devri gerekiyorsa ilgili kişi bilgilendirilmelidir.
+
+---
+
+## 📅 Teslim Tarihleri
+- Tüm görevlerde **net bir teslim tarihi** yer almalıdır.
+- **Geç kalan görevler** için Jira’nın uyarı sistemi kullanılacaktır.
+- Teslim tarihine **3 gün kala** otomatik olarak uyarı işareti çıkar.
+
+---
+
+## 📋 Örnek Görevler
+
+| Başlık                      | Etiket  | Sorumlu | Durum         | Teslim Tarihi   |
+|----------------------------|---------|---------|---------------|-----------------|
+| Frontend Geliştirme Arif   | COL-10  | Arif    | YAPILACAK     | 20 Mar 2025     |
+| UX/UI Tasarımı             | COL-4   |         | DEVAM EDİYOR  | 20 Mar 2025     |
+| Login Page Kodlama         | COL-5   | Ceyda   | DEVAM EDİYOR  | 20 Mar 2025     |
+| Veritabanı Tasarımı Büşra  | COL-6   | Büşra   | DEVAM EDİYOR  | 20 Mar 2025     |
+
+---
+
+## 📌 Notlar
+- Görevler **günlük olarak** güncellenmelidir.
+- Jira panosunun **güncel tutulması**, takım koordinasyonu açısından zorunludur.
+- “Deneme” amaçlı görevler açıkça belirtilmeli ve silinmeden önce onay alınmalıdır.
+
+---
+
+Hazırlayan: **Windsurf Takımı**  
+Tarih: **2025**

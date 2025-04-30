@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collabio - Liste Görünümü</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+            <a href="#" class="nav-item"><i class="fas fa-th"></i> Uygulamalar</a>
+            <a href="#" class="nav-item"><i class="fas fa-tasks"></i> Planlar</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
+            <a href="#" class="nav-item"><i class="fas fa-compass"></i> Yeni keşif projesi</a>
+            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
+            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
+            <a href="#" class="nav-item"><i class="fas fa-columns"></i> Gösterge Panoları</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Takımlar</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Kenar çubuğunu özelleştir</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link active"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    <a href="sayfalar.html" class="nav-link"><i class="fas fa-file"></i> Sayfalar</a>
+                    <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+
+            </nav>
+        </header>
+
+        <div class="list-container dashboard-list-bg" style="overflow-x:auto;">
+            <table class="dashboard-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tür</th>
+                        <th>Anahtar</th>
+                        <th>Özet</th>
+                        <th>Durum</th>
+                        <th>Yorumlar</th>
+                        <th>Kategori</th>
+                        <th>Atanan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-server"></i></td>
+                        <td>COL-3</td>
+                        <td>Api geliştirme</td>
+                        <td><span class="status-badge devam-ediyor">DEVAM EDİYOR</span></td>
+                        <td><i class="fas fa-comment"></i> 1 yorum</td>
+                        <td><span class="category-badge backend">backend</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="avatar dashboard-avatar" title="Ömer Faruk">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-laptop-code"></i></td>
+                        <td>COL-5</td>
+                        <td>Login Page kodlama</td>
+                        <td><span class="status-badge devam-ediyor">DEVAM EDİYOR</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge frontend">frontend</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=CY&background=9c27b0&color=fff" class="avatar dashboard-avatar" title="Ceren Yolur">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-database"></i></td>
+                        <td>COL-6</td>
+                        <td>Veri Tabanı Tasarımı</td>
+                        <td><span class="status-badge devam-ediyor">DEVAM EDİYOR</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge database">database</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=EK&background=00bfae&color=fff" class="avatar dashboard-avatar" title="Emre Kandazoğlu">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-database"></i></td>
+                        <td>COL-11</td>
+                        <td>Veri Tabanı Tasarımı</td>
+                        <td><span class="status-badge devam-ediyor">DEVAM EDİYOR</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge database">database</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=BÖ&background=ff7043&color=fff" class="avatar dashboard-avatar" title="Büşra Özer">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-palette"></i></td>
+                        <td>COL-4</td>
+                        <td>UX/UI Tasarımı</td>
+                        <td><span class="status-badge tamam">TAMAMLANDI</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge ux-ui">ux/ui</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" class="avatar dashboard-avatar" title="Bedirhan Özmen">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-code"></i></td>
+                        <td>COL-10</td>
+                        <td>Frontend Geliştirme Arif</td>
+                        <td><span class="status-badge tamam">TAMAMLANDI</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge frontend">frontend</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=AE&background=ff7043&color=fff" class="avatar dashboard-avatar" title="Arif Emink">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-tasks"></i></td>
+                        <td>COL-12</td>
+                        <td>İş akışları</td>
+                        <td><span class="status-badge yapilacaklar">YAPILACAKLAR</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge is-analizi">iş analizi</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=BT&background=18a0fb&color=fff" class="avatar dashboard-avatar" title="Bahri Talha Baş">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><i class="fas fa-cogs"></i></td>
+                        <td>COL-9</td>
+                        <td>Otomasyon projesinin temel yapısını oluşturmak.</td>
+                        <td><span class="status-badge yapilacaklar">YAPILACAKLAR</span></td>
+                        <td><i class="fas fa-comment"></i> Yorum ekleyin</td>
+                        <td><span class="category-badge test">test</span></td>
+                        <td>
+                            <img src="https://ui-avatars.com/api/?name=MD&background=9c27b0&color=fff" class="avatar dashboard-avatar" title="Melike Danışmaz">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script src="app.js"></script>
+    </table>
+  </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

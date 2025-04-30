@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collabio - Özet Görünümü</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+            <a href="#" class="nav-item"><i class="fas fa-th"></i> Uygulamalar</a>
+            <a href="#" class="nav-item"><i class="fas fa-tasks"></i> Planlar</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
+            <a href="#" class="nav-item"><i class="fas fa-compass"></i> Yeni keşif projesi</a>
+            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
+            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
+            <a href="#" class="nav-item"><i class="fas fa-columns"></i> Gösterge Panoları</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Takımlar</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Kenar çubuğunu özelleştir</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link active"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    <a href="sayfalar.html" class="nav-link"><i class="fas fa-file"></i> Sayfalar</a>
+                    <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+                <div class="nav-right">
+                    <button class="filter-btn">
+                        <i class="fas fa-filter"></i>
+                        Filtrele
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Filtre Seçenekleri -->
+            <div class="filter-bar">
+                <button class="filter-option active">
+                    <i class="fas fa-filter"></i> Filtrele
+                </button>
+                <div class="filter-date">
+                    <span>Son 7 günde</span>
+                    <span>2 öğe tamamlandı</span>
+                </div>
+                <div class="filter-date">
+                    <span>Son 7 günde</span>
+                    <span>2 öğe güncellendi</span>
+                </div>
+                <div class="filter-date">
+                    <span>Son 7 günde</span>
+                    <span>0 öğe oluşturuldu</span>
+                </div>
+                <div class="filter-date">
+                    <span>0 öğenin bitiş tarihi yaklaştı</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Kartları -->
+            <div class="dashboard-cards">
+                <!-- Durum Özeti Kartı -->
+                <div class="dashboard-card summary-card">
+                    <div class="card-header">
+                        <h3>Durum genel bakışı</h3>
+                        <p>Konularınız durumunu anlık olarak görün. <a href="list.html">Tüm konuları göster</a></p>
+                    </div>
+                    <div class="card-content">
+                        <div class="chart-container">
+                            <canvas id="statusChart"></canvas>
+                            <div class="chart-center">
+                                <span class="chart-number">9</span>
+                                <span class="chart-label">Toplam konu</span>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #f4a261;"></span>
+                                <span class="legend-text">Yapılacaklar: 3</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #e76f51;"></span>
+                                <span class="legend-text">Devam Ediyor: 4</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #2a9d8f;"></span>
+                                <span class="legend-text">Tamam: 2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Son Etkinlikler Kartı -->
+                <div class="dashboard-card activities-card">
+                    <div class="card-header">
+                        <div class="card-header-top">
+                            <h3>En son etkinlikleriniz</h3>
+                            <a href="zamancizelgesi.html" id="show-all-activities" class="show-all-btn"><i class="fas fa-external-link-alt"></i> Tümünü Göster</a>
+                        </div>
+                        <p>Proje genelinde neler olduğundan haberdar olun.</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" alt="Bedirhan Özmen">
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-header">
+                                    <span class="activity-user">Bedirhan Özmen</span>
+                                    <span class="activity-tag tamam">TAMAM</span>
+                                    <span class="activity-task">COL-4: UX/UI Tasarımı</span>
+                                </div>
+                                <div class="activity-details">
+                                    konusunda "Revit" alanını güncellendi
+                                </div>
+                                <div class="activity-time">
+                                    <i class="fas fa-clock"></i> 5 gün önce
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" alt="Bedirhan Özmen">
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-header">
+                                    <span class="activity-user">Bedirhan Özmen</span>
+                                    <span class="activity-tag tamam">TAMAM</span>
+                                    <span class="activity-task">COL-4: UX/UI Tasarımı</span>
+                                </div>
+                                <div class="activity-details">
+                                    konusunda "Status" alanını güncellendi
+                                </div>
+                                <div class="activity-time">
+                                    <i class="fas fa-clock"></i> 21 gün önce
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-avatar">
+                                <img src="https://ui-avatars.com/api/?name=MD&background=9c27b0&color=fff" alt="Melike Danışmaz">
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-header">
+                                    <span class="activity-user">Melike Danışmaz</span>
+                                    <span class="activity-tag yapilacaklar">YAPILACAKLAR</span>
+                                    <span class="activity-task">COL-9: Otomasyon projesi</span>
+                                </div>
+                                <div class="activity-details">
+                                    konusunda "Görev" alanını güncellendi
+                                </div>
+                                <div class="activity-time">
+                                    <i class="fas fa-clock"></i> 25 gün önce
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- İkinci Satır Kartlar -->
+            <div class="dashboard-cards">
+                <!-- Yaklaşan Görevler Kartı -->
+                <div class="dashboard-card upcoming-card">
+                    <div class="card-header">
+                        <h3>Yaklaşan Görevler</h3>
+                        <p>Yaklaşan bitiş tarihleri olan görevler</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="upcoming-item">
+                            <div class="upcoming-info">
+                                <span class="upcoming-title">COL-3: Api geliştirme</span>
+                                <span class="upcoming-date"><i class="fas fa-calendar"></i> 9 Nis 2025</span>
+                            </div>
+                            <div class="upcoming-status">
+                                <span class="status-badge devam-ediyor">DEVAM EDİYOR</span>
+                            </div>
+                            <div class="upcoming-assignee">
+                                <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="avatar" title="Ömer Faruk">
+                            </div>
+                        </div>
+                        <div class="upcoming-item">
+                            <div class="upcoming-info">
+                                <span class="upcoming-title">COL-5: Login Page kodlama</span>
+                                <span class="upcoming-date"><i class="fas fa-calendar"></i> 27 Mar 2025</span>
+                            </div>
+                            <div class="upcoming-status">
+                                <span class="status-badge devam-ediyor">DEVAM EDİYOR</span>
+                            </div>
+                            <div class="upcoming-assignee">
+                                <img src="https://ui-avatars.com/api/?name=CY&background=9c27b0&color=fff" class="avatar" title="Ceren Yolur">
+                            </div>
+                        </div>
+                        <div class="upcoming-item">
+                            <div class="upcoming-info">
+                                <span class="upcoming-title">COL-6: Veri Tabanı Tasarımı</span>
+                                <span class="upcoming-date"><i class="fas fa-calendar"></i> 20 Mar 2025</span>
+                            </div>
+                            <div class="upcoming-status">
+                                <span class="status-badge devam-ediyor">DEVAM EDİYOR</span>
+                            </div>
+                            <div class="upcoming-assignee">
+                                <img src="https://ui-avatars.com/api/?name=EK&background=00bfae&color=fff" class="avatar" title="Emre Kandazoğlu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Görev Dağılımı Kartı -->
+                <div class="dashboard-card workload-card">
+                    <div class="card-header">
+                        <h3>Görev Dağılımı</h3>
+                        <p>Takım üyelerinin görev durumları</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="workload-item">
+                            <div class="workload-user">
+                                <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="avatar" title="Ömer Faruk">
+                                <span>Ömer Faruk</span>
+                            </div>
+                            <div class="workload-bars">
+                                <div class="workload-progress">
+                                    <div class="progress-bar" style="width: 30%; background-color: #f4a261;"></div>
+                                    <div class="progress-bar" style="width: 70%; background-color: #e76f51;"></div>
+                                </div>
+                                <div class="workload-labels">
+                                    <span>1 Yapılacak</span>
+                                    <span>1 Devam Ediyor</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workload-item">
+                            <div class="workload-user">
+                                <img src="https://ui-avatars.com/api/?name=CY&background=9c27b0&color=fff" class="avatar" title="Ceren Yolur">
+                                <span>Ceren Yolur</span>
+                            </div>
+                            <div class="workload-bars">
+                                <div class="workload-progress">
+                                    <div class="progress-bar" style="width: 100%; background-color: #e76f51;"></div>
+                                </div>
+                                <div class="workload-labels">
+                                    <span>1 Devam Ediyor</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="workload-item">
+                            <div class="workload-user">
+                                <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" class="avatar" title="Bedirhan Özmen">
+                                <span>Bedirhan Özmen</span>
+                            </div>
+                            <div class="workload-bars">
+                                <div class="workload-progress">
+                                    <div class="progress-bar" style="width: 100%; background-color: #2a9d8f;"></div>
+                                </div>
+                                <div class="workload-labels">
+                                    <span>1 Tamamlandı</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tüm Etkinlikler Popup Modalı -->
+    <div id="activities-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tüm Etkinlikler</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="activities-list">
+                    <!-- Mevcut etkinlikler -->
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" alt="Bedirhan Özmen">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Bedirhan Özmen</span>
+                                <span class="activity-tag tamam">TAMAM</span>
+                                <span class="activity-task">COL-4: UX/UI Tasarımı</span>
+                            </div>
+                            <div class="activity-details">
+                                konusunda "Revit" alanını güncellendi
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 5 gün önce
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=BO&background=ffd600&color=333" alt="Bedirhan Özmen">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Bedirhan Özmen</span>
+                                <span class="activity-tag tamam">TAMAM</span>
+                                <span class="activity-task">COL-4: UX/UI Tasarımı</span>
+                            </div>
+                            <div class="activity-details">
+                                görevini tamamladı
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 5 gün önce
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=AE&background=ff7043&color=fff" alt="Arif Emink">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Arif Emink</span>
+                                <span class="activity-tag tamam">TAMAM</span>
+                                <span class="activity-task">COL-10: Frontend Geliştirme Arif</span>
+                            </div>
+                            <div class="activity-details">
+                                görevini tamamladı
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 6 gün önce
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" alt="Ömer Faruk Bingöl">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Ömer Faruk Bingöl</span>
+                                <span class="activity-tag devam-ediyor">DEVAM EDİYOR</span>
+                                <span class="activity-task">COL-3: Api geliştirme</span>
+                            </div>
+                            <div class="activity-details">
+                                görevini güncelledi
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 1 hafta önce
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=CY&background=9c27b0&color=fff" alt="Ceren Yolur">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Ceren Yolur</span>
+                                <span class="activity-tag devam-ediyor">DEVAM EDİYOR</span>
+                                <span class="activity-task">COL-5: Login Page kodlama</span>
+                            </div>
+                            <div class="activity-details">
+                                görevini güncelledi
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 1 hafta önce
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">
+                            <img src="https://ui-avatars.com/api/?name=BT&background=18a0fb&color=fff" alt="Bahri Talha Baş">
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-header">
+                                <span class="activity-user">Bahri Talha Baş</span>
+                                <span class="activity-tag yapilacak">YAPILACAK</span>
+                                <span class="activity-task">COL-12: İş akışları</span>
+                            </div>
+                            <div class="activity-details">
+                                görevini oluşturdu
+                            </div>
+                            <div class="activity-time">
+                                <i class="fas fa-clock"></i> 2 hafta önce
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Durum grafiği
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('statusChart').getContext('2d');
+            var statusChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Yapılacaklar', 'Devam Ediyor', 'Tamam'],
+                    datasets: [{
+                        data: [3, 4, 2],
+                        backgroundColor: [
+                            '#f4a261',
+                            '#e76f51',
+                            '#2a9d8f'
+                        ],
+                        borderWidth: 0,
+                        cutout: '70%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true
+                        }
+                    }
+                }
+            });
+
+            // Tümünü Göster butonu artık bir link olarak zaman çizelgesi sayfasına yönlendiriyor
+            // Modal işlevleri kaldırıldı
+            
+            // Modal varsa kapat butonuna tıklandığında modalı gizle
+            const modal = document.getElementById('activities-modal');
+            const closeModal = document.querySelector('.close-modal');
+            
+            if (closeModal && modal) {
+                closeModal.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+                
+                // Modal dışına tıklandığında modalı kapat
+                window.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+
+            // ESC tuşuna basıldığında modalı kapat (eğer modal varsa)
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

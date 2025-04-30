@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takvim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Tatil günleri için rozetler */
+        .holiday-badge,
+        .religious-badge,
+        .special-badge {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            z-index: 2;
+        }
+
+        .holiday-badge {
+            background-color: #e74c3c; /* Kırmızı - resmi tatiller */
+        }
+
+        .religious-badge {
+            background-color: #2ecc71; /* Yeşil - dini bayramlar */
+        }
+
+        .special-badge {
+            background-color: #f39c12; /* Turuncu - özel günler */
+        }
+
+        /* Tatil günleri için hücre stilleri */
+        .holiday {
+            background-color: rgba(231, 76, 60, 0.1); /* Kırmızı hafif arka plan */
+        }
+
+        .religious-holiday {
+            background-color: rgba(46, 204, 113, 0.1); /* Yeşil hafif arka plan */
+        }
+
+        .special-day {
+            background-color: rgba(243, 156, 18, 0.1); /* Turuncu hafif arka plan */
+        }
+        
+        /* Tatil günü bilgisi için tooltip */
+        .day-cell[title] {
+            position: relative;
+            cursor: help;
+        }
+        
+        /* Not rozeti stili */
+        .note-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--color-primary, #8972e7);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        /* Not içeriği stili */
+        .note-content {
+            font-size: 0.8rem;
+            color: #333;
+            margin-top: 5px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            max-height: 2.6em;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+            <a href="#" class="nav-item"><i class="fas fa-th"></i> Uygulamalar</a>
+            <a href="#" class="nav-item"><i class="fas fa-tasks"></i> Planlar</a>
+        </div>
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
+            <a href="#" class="nav-item"><i class="fas fa-compass"></i> Yeni keşif projesi</a>
+            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
+            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
+            <a href="#" class="nav-item"><i class="fas fa-columns"></i> Gösterge Panoları</a>
+            <a href="#" class="nav-item"><i class="fas fa-users"></i> Takımlar</a>
+            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Kenar çubuğunu özelleştir</a>
+        </div>
+    </nav>
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link active"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-gantt"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    <a href="sayfalar.html" class="nav-link"><i class="fas fa-file"></i> Sayfalar</a>
+                    <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+                <div class="nav-right">
+                    <!-- <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Takvimi arayın...">
+                    </div> -->
+                    <!-- <div class="team-avatars">
+                        <img src="https://ui-avatars.com/api/?name=A&background=8972e7&color=fff" alt="Team Member">
+                        <img src="https://ui-avatars.com/api/?name=B&background=948ec3&color=fff" alt="Team Member">
+                        <img src="https://ui-avatars.com/api/?name=C&background=84809c&color=fff" alt="Team Member">
+                    </div> -->
+                    <button class="filter-btn"><i class="fas fa-filter"></i> Filtre</button>
+                </div>
+            </nav>
+        </header>
+        <section class="calendar-section">
+            <div class="calendar-wrapper">
+                <div class="calendar-controls">
+                    <div class="calendar-controls-left">
+                        <button class="today-btn" onclick="goToToday()">Bugün</button>
+                        <select class="month-select" id="monthSelect"></select>
+                        <select class="month-select" id="yearSelect"></select>
+                    </div>
+                    <span class="calendar-title">Takvim</span>
+                </div>
+                <div class="calendar-container dashboard-list-bg">
+    <div class="calendar-grid" id="calendarGrid"></div>
+</div>
+<!-- Not Ekle Modalı -->
+<div id="noteModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h3 id="modalDate"></h3>
+    <textarea id="noteInput" placeholder="Notunuzu yazın..."></textarea>
+    <button id="saveNoteBtn" class="add-task-btn">Kaydet</button>
+  </div>
+</div>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Takvim ayarları
+        const dayNames = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Pazar'];
+        const months = ['Ocak', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+        const calendarGrid = document.getElementById('calendarGrid');
+        const monthSelect = document.getElementById('monthSelect');
+        const yearSelect = document.getElementById('yearSelect');
+        let today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        
+        // Türkiye'deki resmi tatiller (2025 yılı için)
+        const holidays = {
+            // Sabit tarihli resmi tatiller (her yıl aynı tarihte)
+            "1-1": { name: "Yılbaşı", type: "holiday" },
+            "4-23": { name: "Ulusal Egemenlik ve Çocuk Bayramı", type: "holiday" },
+            "5-1": { name: "Emek ve Dayanışma Günü", type: "holiday" },
+            "5-19": { name: "Atatürk'ü Anma, Gençlik ve Spor Bayramı", type: "holiday" },
+            "7-15": { name: "Demokrasi ve Milli Birlik Günü", type: "holiday" },
+            "8-30": { name: "Zafer Bayramı", type: "holiday" },
+            "10-29": { name: "Cumhuriyet Bayramı", type: "holiday" },
+            
+            // 2025 yılı için dini bayramlar (değişken tarihli)
+            // Ramazan Bayramı (2025)
+            "3-31": { name: "Ramazan Bayramı Arifesi", type: "religious" },
+            "4-1": { name: "Ramazan Bayramı 1. Gün", type: "religious" },
+            "4-2": { name: "Ramazan Bayramı 2. Gün", type: "religious" },
+            "4-3": { name: "Ramazan Bayramı 3. Gün", type: "religious" },
+            
+            // Kurban Bayramı (2025)
+            "6-7": { name: "Kurban Bayramı Arifesi", type: "religious" },
+            "6-8": { name: "Kurban Bayramı 1. Gün", type: "religious" },
+            "6-9": { name: "Kurban Bayramı 2. Gün", type: "religious" },
+            "6-10": { name: "Kurban Bayramı 3. Gün", type: "religious" },
+            "6-11": { name: "Kurban Bayramı 4. Gün", type: "religious" },
+            
+            // Diğer özel günler (resmi tatil olmayan)
+            "2-14": { name: "Sevgililer Günü", type: "special" },
+            "3-8": { name: "Dünya Kadınlar Günü", type: "special" },
+            "5-11": { name: "Anneler Günü", type: "special" },
+            "6-15": { name: "Babalar Günü", type: "special" },
+            "9-1": { name: "Eğitim ve Öğretim Yılı Başlangıcı", type: "special" },
+            "11-24": { name: "Öğretmenler Günü", type: "special" }
+        };
+        
+        // 2026 yılı için dini bayramlar
+        const holidays2026 = {
+            // Ramazan Bayramı (2026)
+            "3-20": { name: "Ramazan Bayramı Arifesi", type: "religious" },
+            "3-21": { name: "Ramazan Bayramı 1. Gün", type: "religious" },
+            "3-22": { name: "Ramazan Bayramı 2. Gün", type: "religious" },
+            "3-23": { name: "Ramazan Bayramı 3. Gün", type: "religious" },
+            
+            // Kurban Bayramı (2026)
+            "5-28": { name: "Kurban Bayramı Arifesi", type: "religious" },
+            "5-29": { name: "Kurban Bayramı 1. Gün", type: "religious" },
+            "5-30": { name: "Kurban Bayramı 2. Gün", type: "religious" },
+            "5-31": { name: "Kurban Bayramı 3. Gün", type: "religious" },
+            "6-1": { name: "Kurban Bayramı 4. Gün", type: "religious" }
+        };
+        
+        // Tatil bilgisini kontrol etme fonksiyonu
+        function getHolidayInfo(day, month, year) {
+            const dateKey = `${month+1}-${day}`;
+            let holidayData = null;
+            
+            // Yıla göre doğru tatil verisini seç
+            if (year === 2025) {
+                holidayData = holidays[dateKey];
+            } else if (year === 2026) {
+                // 2026 için sabit tatiller
+                holidayData = holidays[dateKey];
+                
+                // 2026 için dini bayramlar
+                if (!holidayData) {
+                    holidayData = holidays2026[dateKey];
+                }
+            }
+            
+            return holidayData;
+        }
+        
+        // Hafta satırları için kaydırma değişkenleri
+        let weekOffset = 0;
+        const totalWeeks = 6; // Takvimde toplam 6 hafta satırı var
+
+        // Ay ve yıl seçicilerini doldur
+        function fillMonthYearSelectors() {
+            // Ay seçicisini doldur
+            monthSelect.innerHTML = '';
+            for (let i = 0; i < months.length; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = months[i];
+                if (i === currentMonth) {
+                    option.selected = true;
+                }
+                monthSelect.appendChild(option);
+            }
+            
+            // Yıl seçicisini doldur (5 yıl öncesi ve 5 yıl sonrası)
+            yearSelect.innerHTML = '';
+            const currentYearInt = today.getFullYear();
+            for (let i = currentYearInt - 5; i <= currentYearInt + 5; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                if (i === currentYear) {
+                    option.selected = true;
+                }
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        // Takvimi belirli bir hafta offsetiyle render et
+        function renderCalendarWithWeekOffset(month, year, offset) {
+            // Takvim grid'ini temizle
+            calendarGrid.innerHTML = '';
+            
+            // Gün başlıklarını ekle
+            for (let i = 0; i < dayNames.length; i++) {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'day-header';
+                dayHeader.textContent = dayNames[i];
+                calendarGrid.appendChild(dayHeader);
+            }
+            
+            // Ayın ilk gününü hesapla (0 = Pazar, 1 = Pazartesi, ...)
+            const firstDay = new Date(year, month, 1).getDay();
+            // Pazartesi başlangıçlı takvim için düzeltme (0 = Pazartesi, 6 = Pazar)
+            const firstDayAdjusted = firstDay === 0 ? 6 : firstDay - 1;
+            
+            // Ayın son gününü hesapla
+            const lastDay = new Date(year, month + 1, 0).getDate();
+            
+            // Önceki ayın son gününü hesapla
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+            
+            // Toplam hücre sayısı (7 gün x 6 hafta)
+            const totalCells = 7 * totalWeeks;
+            
+            // Hafta offsetine göre başlangıç ve bitiş indekslerini hesapla
+            const startCellIndex = 7 * offset; // Her satır 7 gün
+            const endCellIndex = startCellIndex + 7 * (totalWeeks - offset);
+            
+            // Tüm hücreleri oluştur
+            for (let i = 0; i < totalCells; i++) {
+                // Sadece görünür haftaları göster
+                if (i < startCellIndex || i >= endCellIndex) continue;
+                
+                const dayCell = document.createElement('div');
+                dayCell.className = 'day-cell';
+                
+                // Gün numarasını içeren div
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                
+                // Hücrenin hangi aya ait olduğunu belirle
+                let dayOfMonth;
+                let monthClass;
+                
+                // Önceki ayın günleri
+                if (i < firstDayAdjusted) {
+                    dayOfMonth = prevMonthLastDay - firstDayAdjusted + i + 1;
+                    monthClass = 'prev-month';
+                }
+                // Mevcut ayın günleri
+                else if (i < firstDayAdjusted + lastDay) {
+                    dayOfMonth = i - firstDayAdjusted + 1;
+                    monthClass = 'current-month';
+                }
+                // Sonraki ayın günleri
+                else {
+                    dayOfMonth = i - firstDayAdjusted - lastDay + 1;
+                    monthClass = 'next-month';
+                }
+                
+                dayCell.classList.add(monthClass);
+                dayNumber.textContent = dayOfMonth;
+                dayCell.appendChild(dayNumber);
+                
+                // Bugünün tarihini kontrol et ve vurgula
+                if (year === today.getFullYear() && month === today.getMonth() && 
+                    dayOfMonth === today.getDate() && monthClass === 'current-month') {
+                    dayCell.classList.add('today');
+                }
+                
+                // Tatil günü kontrolü
+                if (monthClass === 'current-month') {
+                    const holidayInfo = getHolidayInfo(dayOfMonth, month, year);
+                    
+                    if (holidayInfo) {
+                        // Tatil işareti ekle
+                        const holidayBadge = document.createElement('div');
+                        
+                        if (holidayInfo.type === 'holiday') {
+                            holidayBadge.className = 'holiday-badge';
+                            holidayBadge.innerHTML = '<i class="fas fa-flag"></i>';
+                            dayCell.classList.add('holiday');
+                        } else if (holidayInfo.type === 'religious') {
+                            holidayBadge.className = 'religious-badge';
+                            holidayBadge.innerHTML = '<i class="fas fa-moon"></i>';
+                            dayCell.classList.add('religious-holiday');
+                        } else if (holidayInfo.type === 'special') {
+                            holidayBadge.className = 'special-badge';
+                            holidayBadge.innerHTML = '<i class="fas fa-star"></i>';
+                            dayCell.classList.add('special-day');
+                        }
+                        
+                        // Tooltip ekle
+                        dayCell.setAttribute('title', holidayInfo.name);
+                        dayCell.appendChild(holidayBadge);
+                    }
+                }
+                
+                // Not varsa göster
+                const dateKey = `${year}-${month+1}-${dayOfMonth}`;
+                if (localStorage.getItem(dateKey) && monthClass === 'current-month') {
+                    const noteContent = localStorage.getItem(dateKey);
+                    
+                    // Not rozeti ekle
+                    const noteBadge = document.createElement('div');
+                    noteBadge.className = 'note-badge';
+                    noteBadge.textContent = 'Not';
+                    dayCell.appendChild(noteBadge);
+                    
+                    // Not içeriği ekle
+                    const noteDiv = document.createElement('div');
+                    noteDiv.className = 'note-content';
+                    noteDiv.textContent = noteContent;
+                    dayCell.appendChild(noteDiv);
+                }
+                
+                // Gün hücresine tıklama olayı ekle
+                dayCell.setAttribute('data-date', dateKey);
+                dayCell.addEventListener('click', function() {
+                    openModal(dayOfMonth, month, year, monthClass);
+                });
+                calendarGrid.appendChild(dayCell);
+            }
+            
+            // Takvim başlığını güncelle
+            document.querySelector('.calendar-title').textContent = 
+                `${months[month]} ${year}`;
+                
+            // Ay ve yıl seçicilerini güncelle
+            document.getElementById('monthSelect').value = month;
+            document.getElementById('yearSelect').value = year;
+        }
+        
+        // Takvimi render et (kısa yol fonksiyonu)
+        function renderCalendar(month, year) {
+            // Hafta offsetini sıfırla ve yeni renderCalendarWithWeekOffset fonksiyonunu çağır
+            weekOffset = 0;
+            renderCalendarWithWeekOffset(month, year, weekOffset);
+        }
+        
+        // Bugüne git fonksiyonu
+        function goToToday() {
+            currentMonth = today.getMonth();
+            currentYear = today.getFullYear();
+            weekOffset = 0; // Hafta offsetini sıfırla
+            fillMonthYearSelectors();
+            renderCalendarWithWeekOffset(currentMonth, currentYear, weekOffset);
+        }
+        
+        // Ay değiştiğinde
+        monthSelect.addEventListener('change', function() {
+            currentMonth = parseInt(this.value);
+            weekOffset = 0; // Hafta offsetini sıfırla
+            renderCalendarWithWeekOffset(currentMonth, currentYear, weekOffset);
+        });
+        
+        // Yıl değiştiğinde
+        yearSelect.addEventListener('change', function() {
+            currentYear = parseInt(this.value);
+            weekOffset = 0; // Hafta offsetini sıfırla
+            renderCalendarWithWeekOffset(currentMonth, currentYear, weekOffset);
+        });
+        
+        // Sayfa yüklendiğinde takvimi göster
+        fillMonthYearSelectors();
+        renderCalendar(currentMonth, currentYear);
+        
+        // Fare tekerleği ile hafta satırları arasında geçiş
+        calendarGrid.addEventListener('wheel', function(e) {
+            e.preventDefault(); // Sayfanın kaydırılmasını engelle
+            
+            if (e.deltaY > 0) {
+                // Aşağı kaydırma - sonraki hafta
+                weekOffset = Math.min(weekOffset + 1, totalWeeks - 1);
+                
+                // Son haftadaysa ve aşağı kaydırılırsa sonraki aya geç
+                if (weekOffset === totalWeeks - 1) {
+                    const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                    const firstDayAdjusted = firstDay === 0 ? 6 : firstDay - 1;
+                    const lastDayCell = firstDayAdjusted + lastDayOfMonth - 1;
+                    
+                    // Eğer son gün son haftadaysa ve görünüyorsa, sonraki aya geç
+                    if (Math.floor(lastDayCell / 7) <= weekOffset) {
+                        if (currentMonth === 11) {
+                            currentMonth = 0;
+                            currentYear++;
+                        } else {
+                            currentMonth++;
+                        }
+                        weekOffset = 0; // Yeni ayda ilk haftadan başla
+                    }
+                }
+            } else {
+                // Yukarı kaydırma - önceki hafta
+                weekOffset = Math.max(weekOffset - 1, 0);
+                
+                // İlk haftadaysa ve yukarı kaydırılırsa önceki aya geç
+                if (weekOffset === 0) {
+                    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+                    const firstDayAdjusted = firstDay === 0 ? 6 : firstDay - 1;
+                    
+                    // Eğer ilk gün ilk haftadaysa ve görünüyorsa, önceki aya geç
+                    if (firstDayAdjusted <= 6) {
+                        if (currentMonth === 0) {
+                            currentMonth = 11;
+                            currentYear--;
+                        } else {
+                            currentMonth--;
+                        }
+                        weekOffset = totalWeeks - 1; // Önceki ayın son haftasından başla
+                    }
+                }
+            }
+            
+            // Takvimi güncel hafta offsetiyle yeniden render et
+            renderCalendarWithWeekOffset(currentMonth, currentYear, weekOffset);
+        });
+
+        // Modal ve not ekleme işlemleri
+        const noteModal = document.getElementById('noteModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalDate = document.getElementById('modalDate');
+        const noteInput = document.getElementById('noteInput');
+        const saveNoteBtn = document.getElementById('saveNoteBtn');
+        let selectedDate = null;
+
+        calendarGrid.addEventListener('click', function(e) {
+            const cell = e.target.closest('.day-cell[data-date]');
+            if (cell) {
+                selectedDate = cell.getAttribute('data-date');
+                modalDate.textContent = selectedDate;
+                noteInput.value = (JSON.parse(localStorage.getItem('calendarNotes') || '{}')[selectedDate]) || '';
+                noteModal.style.display = 'flex';
+                noteInput.focus();
+            }
+        });
+        closeModal.onclick = function() {
+            noteModal.style.display = 'none';
+        };
+        window.onclick = function(e) {
+            if (e.target === noteModal) noteModal.style.display = 'none';
+        };
+        saveNoteBtn.onclick = function() {
+            if (!selectedDate) return;
+            let notes = JSON.parse(localStorage.getItem('calendarNotes') || '{}');
+            if (noteInput.value.trim()) {
+                notes[selectedDate] = noteInput.value.trim();
+            } else {
+                delete notes[selectedDate];
+            }
+            localStorage.setItem('calendarNotes', JSON.stringify(notes));
+            noteModal.style.display = 'none';
+            renderCalendar(currentMonth, currentYear);
+        };
+    </script>
+</body>
+</html>

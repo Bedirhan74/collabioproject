@@ -1,14 +1,1271 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ekler - Collabio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Ekler sayfası için özel stiller */
+        .attachments-container {
+            width: 100%;
+            margin: 0;
+            background-color: var(--color-white);
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            height: calc(100vh - 116px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .attachments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+        }
+        
+        .attachments-header h2 {
+            margin: 0;
+            color: var(--color-dark);
+            font-size: 1.5rem;
+        }
+        
+        .upload-btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .upload-btn:hover {
+            background-color: #7860d9;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        
+        .upload-btn:hover {
+            background-color: #7860d9;
+        }
+        
+        .attachments-filter {
+            display: flex;
+            padding: 12px 20px;
+            background-color: #f3f3fb;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 0.9rem;
+            color: var(--color-dark);
+            font-weight: 500;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--color-dark);
+        }
+        
+        .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            width: 250px;
+        }
+        
+        .attachments-list {
+            padding: 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        
+        .attachment-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .attachment-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--color-dark);
+            font-size: 1.2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .attachment-icon.pdf {
+            background-color: #ffebee;
+            color: #e53935;
+        }
+        
+        .attachment-icon.image {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+        
+        .attachment-icon.doc {
+            background-color: #e3f2fd;
+            color: #1e88e5;
+        }
+        
+        .attachment-icon.xls {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+        
+        .attachment-icon.zip {
+            background-color: #fff8e1;
+            color: #ffb300;
+        }
+        
+        .attachment-details {
+            flex: 1;
+        }
+        
+        .attachment-name {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+        
+        .attachment-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: var(--color-light);
+        }
+        
+        .attachment-preview {
+            width: 70px;
+            height: 70px;
+            margin-right: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        
+        .attachment-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .attachment-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--color-medium);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+        
+        .action-btn:hover {
+            background-color: #f0f0f0;
+            color: var(--color-primary);
+        }
+        
+        .action-btn.download:hover {
+            color: #43a047;
+        }
+        
+        .action-btn.delete:hover {
+            color: #e53935;
+        }
+        
+        .empty-state {
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--color-light);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+        
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            gap: 5px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .pagination-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+            color: var(--color-dark);
+            transition: all 0.2s;
+        }
+        
+        .pagination-btn:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .pagination-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .pagination-btn.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* Modal Stilleri */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            animation: slideDown 0.3s;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .close-modal {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .close-modal:hover {
+            transform: scale(1.1);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn-cancel {
+            padding: 8px 16px;
+            background-color: #f3f3fb;
+            color: var(--color-dark);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e9e9f5;
+        }
+        
+        .btn-upload {
+            padding: 8px 16px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-upload:hover {
+            background-color: #7860d9;
+        }
+        
+        /* Dosya Yükleme Alanı */
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+            background-color: #f9f9f9;
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--color-primary);
+            background-color: rgba(137, 114, 231, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+        
+        .upload-text {
+            font-size: 1.1rem;
+            color: var(--color-dark);
+            margin-bottom: 5px;
+        }
+        
+        .upload-info {
+            font-size: 0.9rem;
+            color: var(--color-light);
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--color-primary);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .file-label:hover {
+            background-color: #7860d9;
+        }
+        
+        /* Seçilen Dosyalar */
+        .selected-files {
+            margin-bottom: 20px;
+        }
+        
+        .selected-files h4 {
+            font-size: 1rem;
+            color: var(--color-dark);
+            margin-bottom: 10px;
+        }
+        
+        .file-list {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-item-icon {
+            margin-right: 10px;
+            color: var(--color-medium);
+        }
+        
+        .file-item-name {
+            flex: 1;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-item-size {
+            font-size: 0.8rem;
+            color: var(--color-light);
+            margin: 0 10px;
+        }
+        
+        .file-item-remove {
+            background: none;
+            border: none;
+            color: #e53935;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .file-item-remove:hover {
+            background-color: #ffebee;
+        }
+        
+        /* Form Elemanları */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--color-dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(137, 114, 231, 0.1);
+        }
+        
+        /* Etiketler */
+        .tags-input {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            background-color: #fff;
+        }
+        
+        .tags-input input {
+            border: none;
+            padding: 8px;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .tags-input input:focus {
+            outline: none;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f0f0f0;
+            color: var(--color-dark);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .tag-remove {
+            margin-left: 5px;
+            cursor: pointer;
+            color: var(--color-light);
+            transition: color 0.2s;
+        }
+        
+        .tag-remove:hover {
+            color: #e53935;
+        }
+    </style>
 </head>
 <body>
-    <h1>İzlemeden Geçme</h1>
-    <ul>
-        <li><a href="https://www.youtube.com/watch?v=KVSRCRa-n90">https://www.youtube.com/watch?v=KVSRCRa-n90</a></li>
-    </ul>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
+            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
+            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
+        </div>
+    </nav>
+
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    
+                    <a href="ekler.html" class="nav-link active"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+                
+            </nav>
+        </header>
+
+        <div class="attachments-container">
+            <div class="attachments-header">
+                <h2>Proje Ekleri</h2>
+                <button class="upload-btn">
+                    <i class="fas fa-upload"></i> Dosya Yükle
+                </button>
+            </div>
+            
+            <div class="attachments-filter">
+                <div class="filter-group">
+                    <label>Dosya Türü:</label>
+                    <select class="filter-select">
+                        <option value="all">Tümü</option>
+                        <option value="pdf">PDF</option>
+                        <option value="image">Resim</option>
+                        <option value="doc">Doküman</option>
+                        <option value="xls">Excel</option>
+                        <option value="zip">Arşiv</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Sıralama:</label>
+                    <select class="filter-select">
+                        <option value="date-desc">En yeni</option>
+                        <option value="date-asc">En eski</option>
+                        <option value="name-asc">İsim (A-Z)</option>
+                        <option value="name-desc">İsim (Z-A)</option>
+                        <option value="size-desc">Boyut (Büyük-Küçük)</option>
+                        <option value="size-asc">Boyut (Küçük-Büyük)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Yükleyen:</label>
+                    <select class="filter-select">
+                        <option value="all">Tümü</option>
+                        <option value="me">Ben</option>
+                        <option value="team">Takım</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group" style="margin-left: auto; flex: 1; max-width: 300px;">
+                    <input type="text" class="search-input" placeholder="Dosya adı ara..." style="width: 100%;">
+                </div>
+            </div>
+            
+            <div class="attachments-list">
+                <!-- PDF Dosyası -->
+                <div class="attachment-item">
+                    <div class="attachment-icon pdf">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="attachment-details">
+                        <div class="attachment-name">Proje Gereksinimleri.pdf</div>
+                        <div class="attachment-meta">
+                            <span><i class="fas fa-calendar"></i> 15 May 2025</span>
+                            <span><i class="fas fa-user"></i> Bedirhan Özmen</span>
+                            <span><i class="fas fa-weight-hanging"></i> 2.4 MB</span>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="action-btn download" title="İndir">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" title="Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Resim Dosyası (Önizleme ile) -->
+                <div class="attachment-item">
+                    <div class="attachment-icon image">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="attachment-details">
+                        <div class="attachment-name">Arayüz Tasarımı.png</div>
+                        <div class="attachment-meta">
+                            <span><i class="fas fa-calendar"></i> 14 May 2025</span>
+                            <span><i class="fas fa-user"></i> Ceren Yolur</span>
+                            <span><i class="fas fa-weight-hanging"></i> 1.8 MB</span>
+                        </div>
+                    </div>
+                    <div class="attachment-preview">
+                        <img src="images/collabio-logo.png" alt="Önizleme">
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="action-btn download" title="İndir">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" title="Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Word Dokümanı -->
+                <div class="attachment-item">
+                    <div class="attachment-icon doc">
+                        <i class="fas fa-file-word"></i>
+                    </div>
+                    <div class="attachment-details">
+                        <div class="attachment-name">Toplantı Notları.docx</div>
+                        <div class="attachment-meta">
+                            <span><i class="fas fa-calendar"></i> 12 May 2025</span>
+                            <span><i class="fas fa-user"></i> Bahri Talha Baş</span>
+                            <span><i class="fas fa-weight-hanging"></i> 0.5 MB</span>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="action-btn download" title="İndir">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" title="Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Excel Dosyası -->
+                <div class="attachment-item">
+                    <div class="attachment-icon xls">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <div class="attachment-details">
+                        <div class="attachment-name">Bütçe Planlaması.xlsx</div>
+                        <div class="attachment-meta">
+                            <span><i class="fas fa-calendar"></i> 10 May 2025</span>
+                            <span><i class="fas fa-user"></i> Melike Danışmaz</span>
+                            <span><i class="fas fa-weight-hanging"></i> 0.8 MB</span>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="action-btn download" title="İndir">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" title="Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Zip Dosyası -->
+                <div class="attachment-item">
+                    <div class="attachment-icon zip">
+                        <i class="fas fa-file-archive"></i>
+                    </div>
+                    <div class="attachment-details">
+                        <div class="attachment-name">Kaynak Kodları.zip</div>
+                        <div class="attachment-meta">
+                            <span><i class="fas fa-calendar"></i> 8 May 2025</span>
+                            <span><i class="fas fa-user"></i> Ömer Faruk Bingöl</span>
+                            <span><i class="fas fa-weight-hanging"></i> 5.2 MB</span>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="action-btn download" title="İndir">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" title="Sil">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Dosya Yükleme Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dosya Yükle</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="upload-area">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p class="upload-text">Dosyaları buraya sürükleyin veya seçin</p>
+                    <p class="upload-info">Desteklenen dosya türleri: PDF, Word, Excel, PowerPoint, Resim, Zip</p>
+                    <input type="file" id="fileInput" class="file-input" multiple>
+                    <label for="fileInput" class="file-label">Dosya Seç</label>
+                </div>
+                
+                <div class="selected-files">
+                    <h4>Seçilen Dosyalar</h4>
+                    <div class="file-list" id="selectedFilesList">
+                        <!-- Seçilen dosyalar burada listelenecek -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fileDescription">Açıklama (İsteğe bağlı)</label>
+                    <textarea id="fileDescription" class="form-control" rows="3" placeholder="Dosya hakkında kısa bir açıklama yazın..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Etiketler (İsteğe bağlı)</label>
+                    <div class="tags-input">
+                        <input type="text" id="tagInput" placeholder="Etiket eklemek için yazın ve Enter'a basın">
+                        <div class="tags-container" id="tagsContainer">
+                            <!-- Eklenen etiketler burada gösterilecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">İptal</button>
+                <button class="btn-upload">Yükle</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal Elemanları
+            const modal = document.getElementById('uploadModal');
+            const uploadBtn = document.querySelector('.upload-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const cancelBtn = document.querySelector('.btn-cancel');
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.querySelector('.upload-area');
+            const selectedFilesList = document.getElementById('selectedFilesList');
+            const tagInput = document.getElementById('tagInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const submitUploadBtn = document.querySelector('.btn-upload');
+            
+            // Dosya yükleme butonu tıklandığında modalı aç
+            uploadBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Sayfa kaydırmayı engelle
+            });
+            
+            // Modalı kapatma işlemleri
+            function closeModalFunc() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Sayfa kaydırmayı tekrar etkinleştir
+                // Form alanlarını sıfırla
+                fileInput.value = '';
+                selectedFilesList.innerHTML = '';
+                document.getElementById('fileDescription').value = '';
+                tagsContainer.innerHTML = '';
+            }
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            cancelBtn.addEventListener('click', closeModalFunc);
+            
+            // Modal dışına tıklandığında kapat
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Dosya sürükle bırak işlevi
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, function() {
+                    uploadArea.classList.add('dragover');
+                }, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, function() {
+                    uploadArea.classList.remove('dragover');
+                }, false);
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            }, false);
+            
+            // Dosya seçme işlevi
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+            // Seçilen dosyaları işle
+            function handleFiles(files) {
+                selectedFilesList.innerHTML = ''; // Listeyi temizle
+                
+                if (files.length === 0) {
+                    selectedFilesList.innerHTML = '<div class="file-item"><div class="file-item-name">Dosya seçilmedi</div></div>';
+                    return;
+                }
+                
+                Array.from(files).forEach(file => {
+                    // Dosya türüne göre ikon belirleme
+                    let iconClass = 'fa-file';
+                    if (file.type.includes('pdf')) {
+                        iconClass = 'fa-file-pdf';
+                    } else if (file.type.includes('image')) {
+                        iconClass = 'fa-file-image';
+                    } else if (file.type.includes('word') || file.name.endsWith('.doc') || file.name.endsWith('.docx')) {
+                        iconClass = 'fa-file-word';
+                    } else if (file.type.includes('excel') || file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
+                        iconClass = 'fa-file-excel';
+                    } else if (file.type.includes('zip') || file.type.includes('archive') || file.name.endsWith('.zip')) {
+                        iconClass = 'fa-file-archive';
+                    }
+                    
+                    // Dosya boyutunu formatla
+                    const fileSize = formatFileSize(file.size);
+                    
+                    // Dosya listesi öğesini oluştur
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `
+                        <div class="file-item-icon"><i class="fas ${iconClass}"></i></div>
+                        <div class="file-item-name">${file.name}</div>
+                        <div class="file-item-size">${fileSize}</div>
+                        <button type="button" class="file-item-remove"><i class="fas fa-times"></i></button>
+                    `;
+                    
+                    // Dosyayı kaldırma butonu işlevi
+                    const removeBtn = fileItem.querySelector('.file-item-remove');
+                    removeBtn.addEventListener('click', function() {
+                        fileItem.remove();
+                        
+                        // Tüm dosyalar kaldırıldıysa mesaj göster
+                        if (selectedFilesList.children.length === 0) {
+                            selectedFilesList.innerHTML = '<div class="file-item"><div class="file-item-name">Dosya seçilmedi</div></div>';
+                        }
+                    });
+                    
+                    selectedFilesList.appendChild(fileItem);
+                });
+            }
+            
+            // Dosya boyutunu formatla (KB, MB, GB)
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+            
+            // Etiket ekleme işlevi
+            tagInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const tagValue = this.value.trim();
+                    
+                    if (tagValue) {
+                        // Etiket zaten var mı kontrol et
+                        const existingTags = Array.from(tagsContainer.querySelectorAll('.tag')).map(tag => 
+                            tag.textContent.replace('×', '').trim()
+                        );
+                        
+                        if (!existingTags.includes(tagValue)) {
+                            const tag = document.createElement('div');
+                            tag.className = 'tag';
+                            tag.innerHTML = `${tagValue} <span class="tag-remove">×</span>`;
+                            
+                            // Etiketi kaldırma işlevi
+                            const removeBtn = tag.querySelector('.tag-remove');
+                            removeBtn.addEventListener('click', function() {
+                                tag.remove();
+                            });
+                            
+                            tagsContainer.appendChild(tag);
+                            this.value = '';
+                        } else {
+                            alert('Bu etiket zaten eklenmiş.');
+                        }
+                    }
+                }
+            });
+            
+            // Dosya yükleme işlemi
+            submitUploadBtn.addEventListener('click', function() {
+                const fileItems = selectedFilesList.querySelectorAll('.file-item');
+                
+                if (fileItems.length === 0 || (fileItems.length === 1 && fileItems[0].textContent.includes('Dosya seçilmedi'))) {
+                    alert('Lütfen yüklenecek dosya seçin.');
+                    return;
+                }
+                
+                // Burada gerçek bir yükleme işlemi olacak, şimdilik simule ediyoruz
+                alert('Dosyalar başarıyla yüklendi!');
+                
+                // Yüklenen dosyaları listeye ekle (simülasyon)
+                const fileNames = Array.from(fileItems).map(item => {
+                    const name = item.querySelector('.file-item-name').textContent;
+                    const size = item.querySelector('.file-item-size')?.textContent || '0 KB';
+                    return { name, size };
+                });
+                
+                // Yeni dosyaları listeye ekle
+                fileNames.forEach(file => {
+                    if (file.name !== 'Dosya seçilmedi') {
+                        const now = new Date();
+                        const dateStr = `${now.getDate()} May ${now.getFullYear()}`;
+                        
+                        // Dosya türüne göre ikon sınıfı belirle
+                        let iconClass = '';
+                        let fileType = '';
+                        
+                        if (file.name.endsWith('.pdf')) {
+                            iconClass = 'pdf';
+                            fileType = 'fa-file-pdf';
+                        } else if (file.name.endsWith('.png') || file.name.endsWith('.jpg') || file.name.endsWith('.jpeg') || file.name.endsWith('.gif')) {
+                            iconClass = 'image';
+                            fileType = 'fa-file-image';
+                        } else if (file.name.endsWith('.doc') || file.name.endsWith('.docx')) {
+                            iconClass = 'doc';
+                            fileType = 'fa-file-word';
+                        } else if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
+                            iconClass = 'xls';
+                            fileType = 'fa-file-excel';
+                        } else if (file.name.endsWith('.zip')) {
+                            iconClass = 'zip';
+                            fileType = 'fa-file-archive';
+                        }
+                        
+                        // Yeni dosya öğesi oluştur
+                        const newAttachment = document.createElement('div');
+                        newAttachment.className = 'attachment-item';
+                        newAttachment.innerHTML = `
+                            <div class="attachment-icon ${iconClass}">
+                                <i class="fas ${fileType}"></i>
+                            </div>
+                            <div class="attachment-details">
+                                <div class="attachment-name">${file.name}</div>
+                                <div class="attachment-meta">
+                                    <span><i class="fas fa-calendar"></i> ${dateStr}</span>
+                                    <span><i class="fas fa-user"></i> Bedirhan Özmen</span>
+                                    <span><i class="fas fa-weight-hanging"></i> ${file.size}</span>
+                                </div>
+                            </div>
+                            <div class="attachment-actions">
+                                <button class="action-btn download" title="İndir">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="action-btn delete" title="Sil">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        // Resim dosyası ise önizleme ekle
+                        if (iconClass === 'image') {
+                            const previewDiv = document.createElement('div');
+                            previewDiv.className = 'attachment-preview';
+                            previewDiv.innerHTML = `<img src="images/collabio-logo.png" alt="Önizleme">`;
+                            
+                            // Detaylar ve butonlar arasına ekle
+                            newAttachment.insertBefore(previewDiv, newAttachment.querySelector('.attachment-actions'));
+                        }
+                        
+                        // Yeni eklenen dosyanın butonlarına işlev ekle
+                        const attachmentsList = document.querySelector('.attachments-list');
+                        attachmentsList.insertBefore(newAttachment, attachmentsList.firstChild);
+                        
+                        // Yeni eklenen dosyanın indirme butonuna işlev ekle
+                        const downloadBtn = newAttachment.querySelector('.action-btn.download');
+                        downloadBtn.addEventListener('click', function() {
+                            alert(`${file.name} indiriliyor...`);
+                        });
+                        
+                        // Yeni eklenen dosyanın silme butonuna işlev ekle
+                        const deleteBtn = newAttachment.querySelector('.action-btn.delete');
+                        deleteBtn.addEventListener('click', function() {
+                            if (confirm(`${file.name} dosyasını silmek istediğinize emin misiniz?`)) {
+                                newAttachment.remove();
+                            }
+                        });
+                    }
+                });
+                
+                // Modalı kapat
+                closeModalFunc();
+            });
+            
+            // Mevcut dosyalar için indirme ve silme butonları işlevi
+            const downloadBtns = document.querySelectorAll('.action-btn.download');
+            downloadBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fileName = this.closest('.attachment-item').querySelector('.attachment-name').textContent;
+                    alert(`${fileName} indiriliyor...`);
+                });
+            });
+            
+            const deleteBtns = document.querySelectorAll('.action-btn.delete');
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const fileName = this.closest('.attachment-item').querySelector('.attachment-name').textContent;
+                    if (confirm(`${fileName} dosyasını silmek istediğinize emin misiniz?`)) {
+                        this.closest('.attachment-item').remove();
+                    }
+                });
+            });
+            
+            // Dosya türü filtreleme
+            const fileTypeFilters = document.querySelectorAll('.filter-select');
+            fileTypeFilters.forEach(filter => {
+                filter.addEventListener('change', function() {
+                    applyFilters();
+                });
+            });
+            
+            // Arama kutusu filtreleme
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', function() {
+                applyFilters();
+            });
+            
+            // Tüm filtreleri uygulama fonksiyonu
+            function applyFilters() {
+                const fileTypeFilter = document.querySelectorAll('.filter-select')[0]; // Dosya türü filtresi
+                const sortFilter = document.querySelectorAll('.filter-select')[1]; // Sıralama filtresi
+                const uploaderFilter = document.querySelectorAll('.filter-select')[2]; // Yükleyen filtresi
+                const searchText = searchInput.value.toLowerCase();
+                
+                const attachmentItems = document.querySelectorAll('.attachment-item');
+                
+                // Önce tüm öğeleri göster
+                attachmentItems.forEach(item => {
+                    item.style.display = 'flex';
+                });
+                
+                // Dosya türü filtreleme
+                if (fileTypeFilter && fileTypeFilter.value !== 'all') {
+                    const selectedType = fileTypeFilter.value;
+                    attachmentItems.forEach(item => {
+                        const iconElement = item.querySelector('.attachment-icon');
+                        if (!iconElement.classList.contains(selectedType)) {
+                            item.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Yükleyen filtreleme
+                if (uploaderFilter && uploaderFilter.value !== 'all') {
+                    const selectedUploader = uploaderFilter.value;
+                    attachmentItems.forEach(item => {
+                        if (item.style.display !== 'none') { // Sadece görünen öğeleri kontrol et
+                            const uploaderText = item.querySelector('.attachment-meta').textContent.toLowerCase();
+                            
+                            // 'me' seçiliyse Bedirhan Özmen'i filtrele, 'team' seçiliyse diğerlerini
+                            if (selectedUploader === 'me' && !uploaderText.includes('bedirhan özmen')) {
+                                item.style.display = 'none';
+                            } else if (selectedUploader === 'team' && uploaderText.includes('bedirhan özmen')) {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                }
+                
+                // Metin araması
+                if (searchText) {
+                    attachmentItems.forEach(item => {
+                        if (item.style.display !== 'none') { // Sadece görünen öğeleri kontrol et
+                            const fileName = item.querySelector('.attachment-name').textContent.toLowerCase();
+                            if (!fileName.includes(searchText)) {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                }
+                
+                // Sıralama
+                if (sortFilter && sortFilter.value !== 'date-desc') {
+                    const sortValue = sortFilter.value;
+                    const itemsArray = Array.from(attachmentItems).filter(item => item.style.display !== 'none');
+                    
+                    // Sıralama fonksiyonu
+                    itemsArray.sort((a, b) => {
+                        const nameA = a.querySelector('.attachment-name').textContent;
+                        const nameB = b.querySelector('.attachment-name').textContent;
+                        const dateA = a.querySelector('.attachment-meta').textContent.match(/(\d+) May (\d+)/);
+                        const dateB = b.querySelector('.attachment-meta').textContent.match(/(\d+) May (\d+)/);
+                        const sizeA = a.querySelector('.attachment-meta').textContent.match(/(\d+\.?\d*) (KB|MB|GB)/);
+                        const sizeB = b.querySelector('.attachment-meta').textContent.match(/(\d+\.?\d*) (KB|MB|GB)/);
+                        
+                        // Boyut karşılaştırma için yardımcı fonksiyon
+                        function getSizeInKB(size, unit) {
+                            const value = parseFloat(size);
+                            if (unit === 'MB') return value * 1024;
+                            if (unit === 'GB') return value * 1024 * 1024;
+                            return value;
+                        }
+                        
+                        switch (sortValue) {
+                            case 'date-asc': // En eski
+                                return dateA && dateB ? 
+                                    (parseInt(dateA[1]) - parseInt(dateB[1])) || 
+                                    (parseInt(dateA[2]) - parseInt(dateB[2])) : 0;
+                            case 'name-asc': // İsim (A-Z)
+                                return nameA.localeCompare(nameB);
+                            case 'name-desc': // İsim (Z-A)
+                                return nameB.localeCompare(nameA);
+                            case 'size-desc': // Boyut (Büyük-Küçük)
+                                if (sizeA && sizeB) {
+                                    const sizeAValue = getSizeInKB(sizeA[1], sizeA[2]);
+                                    const sizeBValue = getSizeInKB(sizeB[1], sizeB[2]);
+                                    return sizeBValue - sizeAValue;
+                                }
+                                return 0;
+                            case 'size-asc': // Boyut (Küçük-Büyük)
+                                if (sizeA && sizeB) {
+                                    const sizeAValue = getSizeInKB(sizeA[1], sizeA[2]);
+                                    const sizeBValue = getSizeInKB(sizeB[1], sizeB[2]);
+                                    return sizeAValue - sizeBValue;
+                                }
+                                return 0;
+                            default:
+                                return 0;
+                        }
+                    });
+                    
+                    // Sıralanmış öğeleri yeniden ekle
+                    const attachmentsList = document.querySelector('.attachments-list');
+                    itemsArray.forEach(item => {
+                        attachmentsList.appendChild(item);
+                    });
+                }
+            }
+        });
+    </script>
 </body>
 </html>

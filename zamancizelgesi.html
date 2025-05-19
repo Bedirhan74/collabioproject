@@ -17,8 +17,6 @@
             <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
             <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
             <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
-            <a href="#" class="nav-item"><i class="fas fa-th"></i> Uygulamalar</a>
-            <a href="#" class="nav-item"><i class="fas fa-tasks"></i> Planlar</a>
         </div>
         
         <div class="nav-section">
@@ -34,14 +32,11 @@
 
         <div class="nav-section">
             <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
-            <a href="#" class="nav-item"><i class="fas fa-compass"></i> Yeni keşif projesi</a>
             <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
             <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
-            <a href="#" class="nav-item"><i class="fas fa-columns"></i> Gösterge Panoları</a>
-            <a href="#" class="nav-item"><i class="fas fa-users"></i> Takımlar</a>
-            <a href="#" class="nav-item"><i class="fas fa-cog"></i> Kenar çubuğunu özelleştir</a>
         </div>
     </nav>
+
 
     <main class="main-content">
         <header>
@@ -57,14 +52,11 @@
                     <a href="zamancizelgesi.html" class="nav-link active"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
                     <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
                     <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
-                    <a href="sayfalar.html" class="nav-link"><i class="fas fa-file"></i> Sayfalar</a>
+                    
                     <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
                 </div>
                 <div class="nav-right">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Zaman çizelgesinde arayın...">
-                    </div>
+                    <!-- Arama kutusu kaldırıldı -->
                 </div>
             </nav>
         </header>
@@ -76,6 +68,13 @@
                     <i class="fas fa-filter"></i> Filtrele
                 </button>
                 <div class="filter-options">
+                    <div class="filter-group" style="width: 100%; max-width: 300px;">
+                        <div class="search-box" style="width: 100%; background-color: #f5f5f5;">
+                            <i class="fas fa-search" style="color: var(--color-dark);"></i>
+                            <input type="text" placeholder="Zaman çizelgesinde arayın..." style="color: var(--color-dark); background: transparent;">
+                        </div>
+                    </div>
+                    
                     <div class="filter-group">
                         <label>Tarih Aralığı:</label>
                         <select id="date-filter">
@@ -509,6 +508,9 @@
                 filterOptions.classList.toggle('show');
             });
             
+            // Arama kutusu
+            const searchInput = document.querySelector('.search-box input');
+            
             // Filtreleme işlevi
             const applyFiltersBtn = document.getElementById('apply-filters');
             const resetFiltersBtn = document.getElementById('reset-filters');
@@ -567,11 +569,30 @@
                 }
             });
             
+            // Arama kutusuna olay dinleyicisi ekle
+            searchInput.addEventListener('input', function() {
+                applyFilters();
+            });
+            
+            // Diğer filtrelere de olay dinleyicileri ekle
+            dateFilter.addEventListener('change', function() {
+                applyFilters();
+            });
+            
+            activityFilter.addEventListener('change', function() {
+                applyFilters();
+            });
+            
+            statusFilter.addEventListener('change', function() {
+                applyFilters();
+            });
+            
             // Filtreleri uygula
             function applyFilters() {
                 const selectedDate = dateFilter.value;
                 const selectedActivity = activityFilter.value;
                 const selectedStatus = statusFilter.value;
+                const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
                 
                 let visibleCount = 0;
                 
@@ -597,8 +618,22 @@
                     // Durum filtresi kontrolü
                     const statusMatch = selectedStatus === 'all' || selectedStatus === itemStatus;
                     
+                    // Arama filtresi kontrolü
+                    let searchMatch = true;
+                    if (searchText) {
+                        const itemContent = item.textContent.toLowerCase();
+                        const userText = item.querySelector('.activity-user').textContent.toLowerCase();
+                        const taskText = item.querySelector('.activity-task').textContent.toLowerCase();
+                        const detailsText = item.querySelector('.activity-details').textContent.toLowerCase();
+                        
+                        searchMatch = itemContent.includes(searchText) || 
+                                     userText.includes(searchText) || 
+                                     taskText.includes(searchText) || 
+                                     detailsText.includes(searchText);
+                    }
+                    
                     // Tüm filtreler eşleşiyorsa göster
-                    if (dateMatch && activityMatch && statusMatch) {
+                    if (dateMatch && activityMatch && statusMatch && searchMatch) {
                         item.style.display = 'flex';
                         visibleCount++;
                         
@@ -627,6 +662,11 @@
                 dateFilter.value = 'all';
                 activityFilter.value = 'all';
                 statusFilter.value = 'all';
+                
+                // Arama kutusunu da temizle
+                if (searchInput) {
+                    searchInput.value = '';
+                }
                 
                 // Tüm etkinlikleri ve tarih başlıklarını göster
                 timelineDates.forEach(date => {

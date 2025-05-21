@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collabio - Sizin İçin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .for-you-page {
+            padding: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 1.8rem;
+            color: var(--color-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .recent-projects {
+            margin-bottom: 2rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--color-dark);
+            font-weight: 500;
+        }
+        
+        .view-all {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .project-card {
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--color-primary);
+            transition: all 0.2s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .project-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            margin-right: 0.8rem;
+        }
+        
+        .project-info {
+            flex: 1;
+        }
+        
+        .project-name {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.2rem;
+            font-size: 1.1rem;
+        }
+        
+        .project-desc {
+            color: var(--color-light);
+            font-size: 0.85rem;
+        }
+        
+        .task-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--color-light);
+        }
+        
+        .stat-item i {
+            color: var(--color-primary);
+            font-size: 0.9rem;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            color: var(--color-light);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.2s;
+        }
+        
+        .tab:hover {
+            color: var(--color-primary);
+        }
+        
+        .tab.active {
+            color: var(--color-primary);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+        
+        .tab-count {
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        .panel {
+            display: none;
+        }
+        
+        .panel.active {
+            display: block;
+        }
+        
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--color-white);
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+        
+        .task-item:hover {
+            background-color: #f8f8ff;
+            transform: translateX(2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .task-checkbox {
+            margin-right: 1rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .task-code {
+            background-color: var(--color-background);
+            color: var(--color-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        
+        .task-title {
+            flex: 1;
+            color: var(--color-dark);
+            font-weight: 500;
+        }
+        
+        .task-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .task-date {
+            color: var(--color-light);
+            font-size: 0.85rem;
+        }
+        
+        .task-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--color-light);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .empty-state .btn {
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .empty-state .btn:hover {
+            background-color: #7b61e3;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="sizin_icin.html" class="nav-item active"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item active">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Sizin İçin</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="ozet.html" class="nav-link"><i class="fas fa-chart-pie"></i> Özet</a>
+                    <a href="index.html" class="nav-link"><i class="fas fa-th-large"></i> Pano</a>
+                    <a href="list.html" class="nav-link"><i class="fas fa-list"></i> Liste</a>
+                    <a href="calendar.html" class="nav-link"><i class="fas fa-calendar"></i> Takvim</a>
+                    <a href="zamancizelgesi.html" class="nav-link"><i class="fas fa-chart-bar"></i> Zaman çizelgesi</a>
+                    <a href="onaylar.html" class="nav-link"><i class="fas fa-check-circle"></i> Onaylar</a>
+                    <a href="formlar.html" class="nav-link"><i class="fas fa-file-alt"></i> Formlar</a>
+                    <a href="ekler.html" class="nav-link"><i class="fas fa-paperclip"></i> Ekler</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="for-you-page">
+            <h1 class="page-title">Sizin için</h1>
+            
+            <div class="recent-projects">
+                <div class="section-header">
+                    <h2 class="section-title">En son projeler</h2>
+                    <a href="#" class="view-all">Tüm projeleri görüntüleyin</a>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <img src="images/collabio-logo.png" alt="Collabio" class="project-logo">
+                        <div class="project-info">
+                            <div class="project-name">Collabio</div>
+                            <div class="project-desc">Takım tarafından yönetilen iş</div>
+                        </div>
+                    </div>
+                    <div class="task-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>Hızlı bağlantılar</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Açık biletlerim: 1</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Tamamlanan biletler: 1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="calisilanlar">Üzerinde çalışılanlar <span class="tab-count">1</span></div>
+                    <div class="tab" data-tab="goruntulenenler">Görüntülenenler <span class="tab-count">1</span></div>
+                    <div class="tab" data-tab="bana-atananlar">Bana atananlar <span class="tab-count">1</span></div>
+                    <div class="tab" data-tab="favoriler">Favoriler <span class="tab-count">0</span></div>
+                    <div class="tab" data-tab="panolar">Panolar <span class="tab-count">1</span></div>
+                </div>
+                
+                <div class="panel active" id="calisilanlar-panel">
+                    <div class="task-list">
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox">
+                            <span class="task-code">COL-15</span>
+                            <span class="task-title">UA-UX Tasarım</span>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                                <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="task-avatar" title="Ömer Faruk Bingöl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel" id="goruntulenenler-panel">
+                    <div class="task-list">
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox">
+                            <span class="task-code">COL-15</span>
+                            <span class="task-title">UA-UX Tasarım</span>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                                <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="task-avatar" title="Ömer Faruk Bingöl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel" id="bana-atananlar-panel">
+                    <div class="task-list">
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox">
+                            <span class="task-code">COL-15</span>
+                            <span class="task-title">UA-UX Tasarım</span>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                                <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="task-avatar" title="Ömer Faruk Bingöl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel" id="favoriler-panel">
+                    <div class="empty-state">
+                        <i class="fas fa-star"></i>
+                        <p>Henüz favorilere eklenen öğe bulunmamaktadır.</p>
+                        <button class="btn">Favori Ekle</button>
+                    </div>
+                </div>
+                
+                <div class="panel" id="panolar-panel">
+                    <div class="task-list">
+                        <div class="task-item">
+                            <input type="checkbox" class="task-checkbox" checked>
+                            <span class="task-code">COL-10</span>
+                            <span class="task-title">Frontend Geliştirme Arif</span>
+                            <div class="task-meta">
+                                <span class="task-date">20 Mar 2025</span>
+                                <img src="https://ui-avatars.com/api/?name=AE&background=4caf50&color=fff" class="task-avatar" title="Arif Emin Köklü">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sidebar Modal -->
+    <div id="sidebarModal" class="modal sidebar-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Sizin için</h2>
+                <span class="close" id="closeSidebarModal">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- En Son için içerik -->
+                <div id="enSonContent" class="modal-content-section">
+                    <div class="search-container">
+                        <input type="text" placeholder="Son öğeleri arayın" class="search-input">
+                    </div>
+                    <div class="recent-items">
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Api geliştirme</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">UA-UX Tasarım</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Login Page kodlama</div>
+                                <div class="recent-item-code">15 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">uyjfymyfmkyfk</div>
+                                <div class="recent-item-code">21 gün önce</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">En son görülenlerin tümünü göster</button>
+                    </div>
+                </div>
+                
+                <!-- Favori için içerik -->
+                <div id="favoriContent" class="modal-content-section" style="display: none;">
+                    <div class="search-container">
+                        <input type="text" placeholder="Favori olarak işaretlenen öğeleri arayın" class="search-input">
+                        <button class="filter-button">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                    <div class="project-items">
+                        <div class="project-item-row">
+                            <div class="project-item-icon">
+                                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                            </div>
+                            <div class="project-item-info">
+                                <div class="project-item-title">Collabio</div>
+                            </div>
+                            <div class="project-item-star">
+                                <i class="fas fa-star starred"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">Tüm favori öğeleri görüntüleyin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Sayfa yüklendiginde çalışacak fonksiyonlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sekme işlevselliği
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Tüm sekmelerin active sınıfını kaldır
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Tıklanan sekmeye active sınıfı ekle
+                    this.classList.add('active');
+                    
+                    // Tüm panelleri gizle
+                    const panels = document.querySelectorAll('.panel');
+                    panels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // İlgili paneli göster
+                    const tabName = this.getAttribute('data-tab');
+                    document.getElementById(tabName + '-panel').classList.add('active');
+                });
+            });
+            
+            // Sidebar Modal İşlevleri
+            const enSonButton = document.querySelector('.nav-item:nth-child(2)'); // En son butonu
+            const favoriButton = document.querySelector('.nav-item:nth-child(3)'); // Favori butonu
+            const sidebarModal = document.getElementById('sidebarModal');
+            const closeSidebarModal = document.getElementById('closeSidebarModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const enSonContent = document.getElementById('enSonContent');
+            const favoriContent = document.getElementById('favoriContent');
+            
+            // Modal'ı sidebar'ın yanında konumlandırma
+            function positionModalNextToSidebar() {
+                if (sidebarModal) {
+                    const sidebar = document.querySelector('.sidebar');
+                    if (sidebar) {
+                        const sidebarRect = sidebar.getBoundingClientRect();
+                        sidebarModal.style.left = sidebarRect.width + 'px';
+                        sidebarModal.style.height = '100%';
+                    }
+                }
+            }
+            
+            // En Son butonuna tıklandığında
+            if (enSonButton && sidebarModal) {
+                enSonButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modalTitle.textContent = 'En son';
+                    enSonContent.style.display = 'block';
+                    favoriContent.style.display = 'none';
+                    sidebarModal.style.display = 'block';
+                    positionModalNextToSidebar();
+                });
+            }
+            
+            // Favori butonuna tıklandığında
+            if (favoriButton && sidebarModal) {
+                favoriButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modalTitle.textContent = 'Favori';
+                    enSonContent.style.display = 'none';
+                    favoriContent.style.display = 'block';
+                    sidebarModal.style.display = 'block';
+                    positionModalNextToSidebar();
+                });
+            }
+            
+            // Modal'ı kapatma
+            if (closeSidebarModal) {
+                closeSidebarModal.addEventListener('click', function() {
+                    sidebarModal.style.display = 'none';
+                });
+            }
+            
+            // Modal dışına tıklandığında kapatma
+            window.addEventListener('click', function(event) {
+                if (event.target === sidebarModal) {
+                    sidebarModal.style.display = 'none';
+                }
+            });
+            
+            // ESC tuşuna basıldığında modal'ı kapatma
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && sidebarModal && sidebarModal.style.display === 'block') {
+                    sidebarModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <!-- Sidebar Modal -->
+    <div id="sidebarModal" class="modal sidebar-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Sizin için</h2>
+                <span class="close" id="closeSidebarModal">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- En Son için içerik -->
+                <div id="enSonContent" class="modal-content-section">
+                    <div class="search-container">
+                        <input type="text" placeholder="Son öğeleri arayın" class="search-input">
+                    </div>
+                    <div class="recent-items">
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Api geliştirme</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">UA-UX Tasarım</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Login Page kodlama</div>
+                                <div class="recent-item-code">15 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">uyjfymyfmkyfk</div>
+                                <div class="recent-item-code">21 gün önce</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">En son görülenlerin tümünü göster</button>
+                    </div>
+                </div>
+                
+                <!-- Favori için içerik -->
+                <div id="favoriContent" class="modal-content-section" style="display: none;">
+                    <div class="search-container">
+                        <input type="text" placeholder="Favori olarak işaretlenen öğeleri arayın" class="search-input">
+                        <button class="filter-button">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                    <div class="project-items">
+                        <div class="project-item-row">
+                            <div class="project-item-icon">
+                                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                            </div>
+                            <div class="project-item-info">
+                                <div class="project-item-title">Collabio</div>
+                            </div>
+                            <div class="project-item-star">
+                                <i class="fas fa-star starred"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">Tüm favori öğeleri görüntüleyin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

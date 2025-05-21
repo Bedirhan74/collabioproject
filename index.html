@@ -16,7 +16,7 @@
         </div>
 
         <div class="nav-section">
-            <a href="#" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="sizin_icin.html" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
             <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
             <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
         </div>
@@ -32,11 +32,6 @@
             </div>
         </div>
 
-        <div class="nav-section">
-            <a href="#" class="nav-item"><i class="fas fa-list"></i> Önerilen</a>
-            <a href="#" class="nav-item"><i class="fas fa-th-list"></i> Tüm projeleri görüntüle</a>
-            <a href="#" class="nav-item"><i class="fas fa-filter"></i> Filtreler</a>
-        </div>
     </nav>
 
 
@@ -302,6 +297,83 @@
                     <button type="submit" class="btn-primary">Görev Ekle</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Sidebar Modal -->
+    <div id="sidebarModal" class="modal sidebar-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Sizin için</h2>
+                <span class="close" id="closeSidebarModal">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- En Son için içerik -->
+                <div id="enSonContent" class="modal-content-section">
+                    <div class="search-container">
+                        <input type="text" placeholder="Son öğeleri arayın" class="search-input">
+                    </div>
+                    <div class="recent-items">
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Api geliştirme</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">UA-UX Tasarım</div>
+                                <div class="recent-item-code">11 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">Login Page kodlama</div>
+                                <div class="recent-item-code">15 gün önce</div>
+                            </div>
+                        </div>
+                        <div class="recent-item">
+                            <input type="checkbox" class="recent-checkbox">
+                            <div class="recent-item-info">
+                                <div class="recent-item-title">uyjfymyfmkyfk</div>
+                                <div class="recent-item-code">21 gün önce</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">En son görülenlerin tümünü göster</button>
+                    </div>
+                </div>
+                
+                <!-- Favori için içerik -->
+                <div id="favoriContent" class="modal-content-section" style="display: none;">
+                    <div class="search-container">
+                        <input type="text" placeholder="Favori olarak işaretlenen öğeleri arayın" class="search-input">
+                        <button class="filter-button">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                    <div class="project-items">
+                        <div class="project-item-row">
+                            <div class="project-item-icon">
+                                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                            </div>
+                            <div class="project-item-info">
+                                <div class="project-item-title">Collabio</div>
+                            </div>
+                            <div class="project-item-star">
+                                <i class="fas fa-star starred"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-link">Tüm favori öğeleri görüntüleyin</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

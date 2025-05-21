@@ -86,6 +86,69 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Sidebar butonlarına tıklandığında modal açılması
+    const enSonButton = document.querySelector('.nav-item:nth-child(2)'); // En son butonu
+    const favoriButton = document.querySelector('.nav-item:nth-child(3)'); // Favori butonu
+    const sidebarModal = document.getElementById('sidebarModal');
+    const closeSidebarModal = document.getElementById('closeSidebarModal');
+    const modalTitle = document.getElementById('modalTitle');
+    
+    // En son butonu için
+    if (enSonButton && sidebarModal) {
+        enSonButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalTitle.textContent = 'En son';
+            sidebarModal.style.display = 'block';
+            // İçerik bölümlerini göster/gizle
+            document.getElementById('enSonContent').style.display = 'block';
+            document.getElementById('favoriContent').style.display = 'none';
+            // Modal'ın pozisyonunu ayarla
+            positionModalNextToSidebar();
+        });
+    }
+    
+    // Favori butonu için
+    if (favoriButton && sidebarModal) {
+        favoriButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalTitle.textContent = 'Favori';
+            sidebarModal.style.display = 'block';
+            // İçerik bölümlerini göster/gizle
+            document.getElementById('enSonContent').style.display = 'none';
+            document.getElementById('favoriContent').style.display = 'block';
+            // Modal'ın pozisyonunu ayarla
+            positionModalNextToSidebar();
+        });
+    }
+    
+    // Modal'ı kapatma butonu
+    if (closeSidebarModal) {
+        closeSidebarModal.addEventListener('click', function() {
+            sidebarModal.style.display = 'none';
+        });
+    }
+    
+    // Modal dışına tıklandığında kapanması
+    window.addEventListener('click', function(e) {
+        if (e.target === sidebarModal) {
+            sidebarModal.style.display = 'none';
+        }
+    });
+    
+    // Modal'ı sidebar'ın yanında konumlandır
+    function positionModalNextToSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const modalContent = sidebarModal.querySelector('.modal-content');
+        
+        if (sidebar && modalContent) {
+            const sidebarRect = sidebar.getBoundingClientRect();
+            modalContent.style.position = 'absolute';
+            modalContent.style.left = (sidebarRect.width + 10) + 'px';
+            modalContent.style.top = '50px';
+            modalContent.style.transform = 'none';
+        }
+    }
+
     // Eğer liste sayfasındaysak, görevleri listele
     if (window.location.pathname.includes('list.html')) {
         renderTaskList();

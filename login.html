@@ -29,13 +29,13 @@
                 
                 <div class="form-group">
                     <label for="username">Kullanıcı Adı</label>
-                    <input type="text" id="username" required>
+                    <input type="text" id="username" autocomplete="username" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Şifre</label>
                     <div class="password-input">
-                        <input type="password" id="password" required>
+                        <input type="password" id="password" autocomplete="current-password" required>
                         <button type="button" class="toggle-password" onclick="togglePassword()">
                             <i class="fas fa-eye"></i>
                         </button>
@@ -70,23 +70,34 @@
             }
         }
 
+        // Animasyonlu balonlar
+        document.addEventListener('DOMContentLoaded', function() {
+            const bubbles = document.querySelectorAll('.bubble');
+            
+            bubbles.forEach(bubble => {
+                // Rastgele başlangıç pozisyonu
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                bubble.style.animationDelay = `${Math.random() * 2}s`;
+            });
+        });
+
         // Giriş kontrolü
         document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            // Kayıtlı kullanıcıları kontrol et
-            const users = JSON.parse(localStorage.getItem("users") || "[]");
-            const user = users.find(u => u.username === username && u.password === password);
-            
-            // Admin hesabı kontrolü (varsayılan hesap)
-            if (username === "admin" && password === "1234" || user) {
+            // Basit doğrulama - herhangi bir kullanıcı adı ve şifre ile giriş yapılabilir
+            if (username && password) {
+                // Giriş bilgilerini localStorage'a kaydet
                 localStorage.setItem("isLoggedIn", "true");
                 localStorage.setItem("currentUser", username);
+                
+                // Ana sayfaya yönlendir
                 window.location.href = "index.html";
             } else {
-                alert("Kullanıcı adı veya şifre hatalı!");
+                alert("Lütfen kullanıcı adı ve şifre giriniz!");
             }
         });
     </script>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collabio - Proje Oluştur</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .project-form-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--color-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(137, 114, 231, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #7b61e3;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(137, 114, 231, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #f3f3fb;
+            color: var(--color-dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e5f0;
+        }
+
+        .page-title {
+            margin-bottom: 30px;
+            color: var(--color-dark);
+            font-size: 1.8rem;
+        }
+
+        .link-generator {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .link-generator h3 {
+            margin-bottom: 15px;
+            color: var(--color-dark);
+        }
+
+        .email-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .participant-email {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .btn-add-email {
+            padding: 12px 15px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-add-email:hover {
+            background-color: #7b61e3;
+        }
+
+        .added-emails {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .email-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e0e0ff;
+            color: var(--color-dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .email-tag .remove-email {
+            background: none;
+            border: none;
+            color: var(--color-dark);
+            margin-left: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .email-tag .remove-email:hover {
+            color: #ff3366;
+        }
+
+        .project-icon-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-color: #f3f3fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+
+        .project-icon-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .project-details {
+            flex: 1;
+        }
+
+        .icon-upload {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .upload-btn {
+            background-color: #f3f3fb;
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            color: var(--color-dark);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .upload-btn:hover {
+            background-color: #e9e9f5;
+            border-color: var(--color-primary);
+        }
+
+        .upload-btn i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img src="images/collabio-logo.png" alt="Collabio Logo" class="logo">
+        </div>
+
+        <div class="nav-section">
+            <a href="sizin_icin.html" class="nav-item"><i class="fas fa-user"></i> Sizin için</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> En son</a>
+            <a href="#" class="nav-item"><i class="fas fa-star"></i> Favori</a>
+        </div>
+        
+        <div class="nav-section">
+            <div class="section-header">
+                <span>Projeler</span>
+                <button class="add-btn" id="createProjectBtn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="project-item">
+                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                <span>Collabio</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header>
+            <div class="header-top">
+                <h1>Collabio Project Management</h1>
+            </div>
+            <nav class="project-nav">
+                <div class="nav-left">
+                    <a href="index.html" class="nav-link"><i class="fas fa-arrow-left"></i> Geri Dön</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="project-form-container">
+            <h2 class="page-title">Yeni Proje Oluştur</h2>
+            
+            <form id="createProjectForm">
+                <div class="project-header">
+                    <div class="project-icon-preview">
+                        <img src="images/collabio-logo.png" id="projectIconPreview" alt="Proje İkonu">
+                    </div>
+                    <div class="project-details">
+                        <div class="form-group">
+                            <label for="projectName">Proje Adı</label>
+                            <input type="text" id="projectName" name="projectName" class="form-control" placeholder="Projenin adını girin" required>
+                        </div>
+                        <div class="icon-upload">
+                            <label for="projectIcon" class="upload-btn">
+                                <i class="fas fa-upload"></i> Proje İkonu Yükle
+                            </label>
+                            <input type="file" id="projectIcon" name="projectIcon" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription">Proje Açıklaması</label>
+                    <textarea id="projectDescription" name="projectDescription" class="form-control" placeholder="Projenin detaylı açıklamasını girin"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectCategory">Proje Kategorisi</label>
+                    <select id="projectCategory" name="projectCategory" class="form-control">
+                        <option value="">Kategori Seçin</option>
+                        <option value="frontend">Frontend Geliştirme</option>
+                        <option value="backend">Backend Geliştirme</option>
+                        <option value="ux-ui">UX/UI Tasarım</option>
+                        <option value="database">Veritabanı</option>
+                        <option value="is-analizi">İş Analizi</option>
+                        <option value="test">Test</option>
+                    </select>
+                </div>
+
+                <div class="link-generator">
+                    <h3>Katılımcı Ekle</h3>
+                    <p>Projeye katılımcı eklemek için e-posta adreslerini girin.</p>
+                    
+                    <div id="emailList">
+                        <div class="email-item">
+                            <input type="email" class="form-control participant-email" placeholder="E-posta adresi girin">
+                            <button type="button" class="btn-add-email"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div id="addedEmails" class="added-emails">
+                        <!-- Eklenen e-postalar burada görüntülenecek -->
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">İptal</button>
+                    <button type="submit" class="btn btn-primary">Proje Oluştur</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Proje ikonu önizleme
+            const projectIconInput = document.getElementById('projectIcon');
+            const projectIconPreview = document.getElementById('projectIconPreview');
+            
+            projectIconInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        projectIconPreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // E-posta ekleme işlevi
+            const addedEmails = [];
+            const emailListContainer = document.getElementById('emailList');
+            const addedEmailsContainer = document.getElementById('addedEmails');
+            
+            // İlk e-posta ekleme butonunu ayarla
+            setupEmailAddButton(document.querySelector('.btn-add-email'));
+            
+            function setupEmailAddButton(button) {
+                button.addEventListener('click', function() {
+                    const emailInput = this.previousElementSibling;
+                    const email = emailInput.value.trim();
+                    
+                    if (email && isValidEmail(email) && !addedEmails.includes(email)) {
+                        // E-postayı listeye ekle
+                        addedEmails.push(email);
+                        
+                        // E-posta etiketi oluştur
+                        const emailTag = document.createElement('div');
+                        emailTag.className = 'email-tag';
+                        emailTag.innerHTML = `
+                            ${email}
+                            <button type="button" class="remove-email" data-email="${email}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        `;
+                        
+                        // Silme butonuna olay dinleyicisi ekle
+                        emailTag.querySelector('.remove-email').addEventListener('click', function() {
+                            const emailToRemove = this.getAttribute('data-email');
+                            const index = addedEmails.indexOf(emailToRemove);
+                            
+                            if (index !== -1) {
+                                addedEmails.splice(index, 1);
+                                addedEmailsContainer.removeChild(emailTag);
+                            }
+                        });
+                        
+                        // Etiketi ekle
+                        addedEmailsContainer.appendChild(emailTag);
+                        
+                        // Giriş alanını temizle
+                        emailInput.value = '';
+                        emailInput.focus();
+                    } else if (!isValidEmail(email) && email) {
+                        alert('Lütfen geçerli bir e-posta adresi girin.');
+                    } else if (addedEmails.includes(email)) {
+                        alert('Bu e-posta adresi zaten eklenmiş.');
+                        emailInput.value = '';
+                    }
+                });
+            }
+            
+            // E-posta geçerliliğini kontrol et
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            // İptal butonu işlevi
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+            
+            // Form gönderimi
+            document.getElementById('createProjectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Form verilerini al
+                const projectName = document.getElementById('projectName').value;
+                const projectDescription = document.getElementById('projectDescription').value;
+                const projectCategory = document.getElementById('projectCategory').value;
+                
+                // Burada API'ye gönderme işlemi yapılabilir
+                console.log('Proje oluşturuluyor:', {
+                    name: projectName,
+                    description: projectDescription,
+                    category: projectCategory,
+                    participants: addedEmails
+                });
+                
+                // Başarılı oluşturma sonrası ana sayfaya yönlendirme
+                alert('Proje başarıyla oluşturuldu!');
+                window.location.href = 'index.html';
+            });
+            
+            // Sidebar proje oluşturma butonu
+            document.getElementById('createProjectBtn').addEventListener('click', function() {
+                // Zaten proje oluşturma sayfasındayız, bir şey yapmaya gerek yok
+            });
+        });
+    </script>
+</body>
+
+</html>

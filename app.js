@@ -74,6 +74,13 @@ const tasks = [
 
 // Sayfa yükleme işlemleri
 document.addEventListener('DOMContentLoaded', function() {
+    // Proje oluşturma butonuna tıklandığında yeni sayfaya yönlendirme
+    const createProjectBtn = document.querySelector('.section-header .add-btn');
+    if (createProjectBtn) {
+        createProjectBtn.addEventListener('click', function() {
+            window.location.href = 'create-project.html';
+        });
+    }
     // Görünüm değiştirme işlemleri
     const viewLinks = document.querySelectorAll('.nav-link');
     viewLinks.forEach(link => {

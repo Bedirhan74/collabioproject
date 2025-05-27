@@ -315,7 +315,13 @@
                 <form id="projectEditForm">
                     <div class="form-group">
                         <label for="projectName">Proje Adı</label>
-                        <input type="text" id="projectName" class="form-control" required>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="text" id="projectName" class="form-control" style="width: 70%;" required>
+                            <button type="button" id="favoriteProjectBtn" class="btn" style="display: flex; align-items: center; gap: 5px;">
+                                <i class="fas fa-star" style="color: gold;"></i>
+                                <span>Favorilere Ekle</span>
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -434,13 +440,15 @@
             const projectMembersContainer = document.getElementById('projectMembers');
             const projectNameInput = document.getElementById('projectName');
             const projectDescriptionInput = document.getElementById('projectDescription');
+            const favoriteProjectBtn = document.getElementById('favoriteProjectBtn');
             
             // Mevcut proje bilgileri (örnek veri)
             let currentProject = {
                 id: 'collabio',
                 name: 'Collabio',
                 description: 'Proje yönetim uygulaması',
-                members: []
+                members: [],
+                isFavorite: false
             };
             
             // Proje düzenleme butonlarına tıklama olayı ekle
@@ -457,12 +465,26 @@
                 projectNameInput.value = currentProject.name;
                 projectDescriptionInput.value = currentProject.description || '';
                 
+                // Favori durumunu güncelle
+                updateFavoriteButton();
+                
                 // Mevcut üyeleri yükle
                 loadProjectMembers();
                 
                 // Modalı göster
                 projectEditModal.style.display = 'flex';
                 document.body.classList.add('modal-open');
+            }
+            
+            // Favori butonunu güncelle
+            function updateFavoriteButton() {
+                if (currentProject.isFavorite) {
+                    favoriteProjectBtn.innerHTML = '<i class="fas fa-star" style="color: gold;"></i> <span>Favorilerden Çıkar</span>';
+                    favoriteProjectBtn.classList.add('active');
+                } else {
+                    favoriteProjectBtn.innerHTML = '<i class="fas fa-star" style="color: gold;"></i> <span>Favorilere Ekle</span>';
+                    favoriteProjectBtn.classList.remove('active');
+                }
             }
             
             // Modalı kapat
@@ -525,6 +547,18 @@
                     projectMembersContainer.appendChild(memberTag);
                 });
             }
+            
+            // Favori butonuna tıklama olayı ekle
+            favoriteProjectBtn.addEventListener('click', function() {
+                // Favori durumunu tersine çevir
+                currentProject.isFavorite = !currentProject.isFavorite;
+                
+                // Butonu güncelle
+                updateFavoriteButton();
+                
+                // Burada API çağrısı yapılabilir
+                console.log('Favori durumu güncellendi:', currentProject.isFavorite);
+            });
             
             // Form gönderimi
             projectEditForm.addEventListener('submit', function(e) {

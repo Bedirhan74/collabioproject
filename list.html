@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collabio - Liste Görünümü</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="comment-styles.css">
+    <link rel="stylesheet" href="project-member.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -25,8 +27,12 @@
                 <button class="add-btn"><i class="fas fa-plus"></i></button>
             </div>
             <div class="project-item active">
-                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
-                <span>Collabio</span>
+                <div class="project-item-content">
+                    <button class="project-member-btn left-member-btn" data-project-id="collabio" title="Katılımcı Ekle"><i class="fas fa-user-plus"></i></button>
+                    <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                    <span>Collabio</span>
+                </div>
+                <button class="project-member-btn" data-project-id="collabio" title="Katılımcı Ekle"><i class="fas fa-user-plus"></i></button>
             </div>
         </div>
 
@@ -74,7 +80,7 @@
                         <td>COL-3</td>
                         <td>Api geliştirme</td>
                         <td><span class="status-badge devam-ediyor">DEVAM EDİYOR</span></td>
-                        <td><i class="fas fa-comment"></i> 1 yorum</td>
+                        <td><button class="comment-btn" data-task-code="COL-3"><i class="fas fa-comment"></i> 1 yorum</button></td>
                         <td><span class="category-badge backend">backend</span></td>
                         <td>
                             <img src="https://ui-avatars.com/api/?name=ÖF&background=18a0fb&color=fff" class="avatar dashboard-avatar" title="Ömer Faruk">
@@ -246,6 +252,280 @@
     </div>
 
     <script src="app.js"></script>
+
+    <!-- Yorum Modalı -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content comment-modal-content">
+            <div class="modal-header">
+                <h2>Yorumlar - <span id="commentTaskCode">COL-3</span></h2>
+                <span class="close" id="closeCommentModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="comments-container" id="commentsContainer">
+                    <!-- Mevcut yorumlar burada gösterilecek -->
+                </div>
+                <div class="comment-form-container">
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <textarea id="commentText" placeholder="Yorum ekleyin..." required></textarea>
+                        </div>
+                        <div class="form-group file-upload-group">
+                            <label for="commentFile" class="file-upload-label">
+                                <i class="fas fa-paperclip"></i> Dosya Ekle
+                            </label>
+                            <input type="file" id="commentFile" class="file-upload-input">
+                            <span id="selectedFileName"></span>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Yorum Ekle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="comments.js"></script>
+    
+    <!-- Proje Düzenleme ve Katılımcı Ekleme Modalı -->
+    <div id="projectModal" class="project-modal">
+        <div class="project-modal-content">
+            <div class="project-modal-header">
+                <h2>Proje Yönetimi - <span id="projectName">Collabio</span></h2>
+                <span class="close" id="closeProjectModal">&times;</span>
+            </div>
+            <div class="project-tabs">
+                <div class="project-tab active" data-tab="details">Proje Detayları</div>
+                <div class="project-tab" data-tab="members">Katılımcılar</div>
+            </div>
+            <div class="project-modal-body">
+                <!-- Proje Detayları Tabı -->
+                <div class="project-tab-content active" id="detailsTab">
+                    <form id="projectDetailsForm">
+                        <div class="project-form-group">
+                            <label for="projectNameInput">Proje Adı</label>
+                            <input type="text" id="projectNameInput" value="Collabio" required>
+                        </div>
+                        <div class="project-form-group">
+                            <label for="projectDescription">Proje Açıklaması</label>
+                            <textarea id="projectDescription" placeholder="Proje hakkında açıklama ekleyin...">Jira benzeri proje yönetim uygulaması</textarea>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Katılımcılar Tabı -->
+                <div class="project-tab-content" id="membersTab">
+                    <div class="member-list">
+                        <div class="member-item">
+                            <div class="member-avatar" style="background-color: #9c27b0;">MD</div>
+                            <div class="member-info">
+                                <div class="member-name">Melike Danışmaz</div>
+                                <div class="member-role">Proje Yöneticisi</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-action-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="member-action-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-avatar" style="background-color: #18a0fb;">ÖF</div>
+                            <div class="member-info">
+                                <div class="member-name">Ömer Faruk Bingöl</div>
+                                <div class="member-role">Geliştirici</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-action-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="member-action-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="member-item">
+                            <div class="member-avatar" style="background-color: #ffd600;">BO</div>
+                            <div class="member-info">
+                                <div class="member-name">Bedirhan Özmen</div>
+                                <div class="member-role">Tasarımcı</div>
+                            </div>
+                            <div class="member-actions">
+                                <button class="member-action-btn"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="member-action-btn"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="add-member-form">
+                        <h3>Yeni Katılımcı Ekle</h3>
+                        <form id="addMemberForm">
+                            <div class="project-form-group">
+                                <label for="memberName">Ad Soyad</label>
+                                <input type="text" id="memberName" placeholder="Katılımcı adı ve soyadı" required>
+                            </div>
+                            <div class="project-form-group">
+                                <label for="memberRole">Rol</label>
+                                <input type="text" id="memberRole" placeholder="Örn: Geliştirici, Tasarımcı, Test Uzmanı" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Katılımcı Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="project-modal-footer">
+                <button class="btn btn-secondary" id="cancelProjectBtn">İptal</button>
+                <button class="btn btn-primary" id="saveProjectBtn">Kaydet</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Member Addition Modal -->
+    <div id="memberAdditionModal" class="member-addition-modal">
+        <div class="member-addition-content">
+            <div class="member-addition-header">
+                <h3>Katılımcı Ekle</h3>
+            </div>
+            <div class="member-addition-body">
+                <p>Projeye katılımcı eklemek için e-posta adreslerini girin.</p>
+                <div id="emailList">
+                    <div class="email-item">
+                        <input type="email" class="form-control participant-email" placeholder="E-posta adresi girin">
+                        <button type="button" class="btn-add-email"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div id="addedEmails" class="added-emails">
+                    <!-- Added emails will appear here -->
+                </div>
+            </div>
+            <div class="member-addition-footer">
+                <button type="button" class="btn btn-secondary" id="cancelMemberAddition">İptal</button>
+                <button type="button" class="btn btn-primary" id="saveMembers">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="project-member.js"></script>
+    <script>
+        // Member addition functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const memberAdditionModal = document.getElementById('memberAdditionModal');
+            const memberAdditionBtns = document.querySelectorAll('.project-member-btn');
+            const cancelMemberAdditionBtn = document.getElementById('cancelMemberAddition');
+            const saveMembersBtn = document.getElementById('saveMembers');
+            const emailListContainer = document.getElementById('emailList');
+            const addedEmailsContainer = document.getElementById('addedEmails');
+            const addedEmails = [];
+
+            // Open modal when any member addition button is clicked
+            memberAdditionBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    memberAdditionModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Close modal when clicking cancel or outside the modal
+            cancelMemberAdditionBtn.addEventListener('click', closeMemberAdditionModal);
+            window.addEventListener('click', function(e) {
+                if (e.target === memberAdditionModal) {
+                    closeMemberAdditionModal();
+                }
+            });
+
+            // Close modal with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeMemberAdditionModal();
+                }
+            });
+
+            // Save members
+            saveMembersBtn.addEventListener('click', function() {
+                // Here you would typically save the members to your backend
+                alert('Katılımcılar başarıyla eklendi!');
+                closeMemberAdditionModal();
+            });
+
+            // Email addition functionality
+            function setupEmailAddButton(button) {
+                button.addEventListener('click', function() {
+                    const emailInput = this.previousElementSibling;
+                    addEmail(emailInput);
+                });
+
+                // Also add email when pressing Enter
+                const emailInput = button.previousElementSibling;
+                emailInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addEmail(this);
+                    }
+                });
+            }
+
+
+            function addEmail(input) {
+                const email = input.value.trim();
+                
+                if (email && isValidEmail(email) && !addedEmails.includes(email)) {
+                    // Add email to the list
+                    addedEmails.push(email);
+                    
+                    // Create email tag
+                    const emailTag = document.createElement('div');
+                    emailTag.className = 'email-tag';
+                    emailTag.innerHTML = `
+                        ${email}
+                        <button type="button" class="remove-email" data-email="${email}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    // Add remove functionality
+                    emailTag.querySelector('.remove-email').addEventListener('click', function() {
+                        const emailToRemove = this.getAttribute('data-email');
+                        const index = addedEmails.indexOf(emailToRemove);
+                        
+                        if (index !== -1) {
+                            addedEmails.splice(index, 1);
+                            this.parentElement.remove();
+                        }
+                    });
+                    
+                    // Add tag to container
+                    addedEmailsContainer.appendChild(emailTag);
+                    
+                    // Clear input
+                    input.value = '';
+                    input.focus();
+                    
+                } else if (!isValidEmail(email) && email) {
+                    alert('Lütfen geçerli bir e-posta adresi girin.');
+                } else if (addedEmails.includes(email)) {
+                    alert('Bu e-posta adresi zaten eklenmiş.');
+                    input.value = '';
+                }
+            }
+
+            
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            function closeMemberAdditionModal() {
+                memberAdditionModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Clear the form when closing
+                document.querySelector('.participant-email').value = '';
+                addedEmails.length = 0;
+                addedEmailsContainer.innerHTML = '';
+            }
+            
+            // Initialize email add button
+            const addEmailBtn = document.querySelector('.btn-add-email');
+            if (addEmailBtn) {
+                setupEmailAddButton(addEmailBtn);
+            }
+        });
+    </script>
 </body>
 
 </html>

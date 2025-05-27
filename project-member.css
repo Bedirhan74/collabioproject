@@ -1,0 +1,761 @@
+/* Proje Katılımcı Ekleme Butonu ve Modal Stilleri */
+
+.project-member-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 1;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.project-item {
+    position: relative;
+    padding: 0.25rem 0;
+    margin: 0.25rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.project-item-content {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.project-item:hover .project-item-content {
+    background-color: rgba(137, 114, 231, 0.1);
+}
+
+.project-item.active .project-item-content {
+    background-color: rgba(137, 114, 231, 0.2);
+    font-weight: 500;
+}
+
+.project-member-btn {
+    background: none;
+    border: none;
+    color: var(--color-medium);
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+}
+
+.project-item:hover .project-member-btn,
+.project-item.active .project-member-btn {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.project-member-btn:hover {
+    background-color: rgba(137, 114, 231, 0.2);
+    color: var(--color-primary);
+}
+
+/* Proje Düzenleme Modalı */
+.modal {
+    display: flex; /* modal-content'i ortalamak için */
+    align-items: center; /* dikey ortalama */
+    justify-content: center; /* yatay ortalama */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px; /* içerik kenarlara çok yapışmasın diye */
+    overflow: hidden; /* Scroll'u engellemek için */
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+.modal-content {
+    background-color: #fff !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15) !important;
+    animation: modalFadeIn 0.3s !important;
+    width: 85% !important;
+    max-width: 750px !important;
+    height: auto !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    border: 1px solid rgba(230, 230, 240, 0.7) !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+    border-bottom: 1px solid #eef0f5;
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    position: relative;
+}
+
+.modal-header h2:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: 3px;
+}
+
+.close {
+    color: #a0a0b1;
+    font-size: 24px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.close:hover {
+    color: #ff4d4f;
+    background-color: #fff2f0;
+}
+
+.modal-body {
+    padding: 24px;
+    flex: 1;
+    overflow: visible;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
+    border-radius: 0 0 16px 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group.wide {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #4a4a68;
+    font-size: 13px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #e0e0e9;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.2s;
+    background-color: #fff;
+    color: #33334a;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+    position: relative;
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(137, 114, 231, 0.15);
+    background-color: #fafbff;
+}
+
+textarea.form-control {
+    min-height: 80px;
+    resize: none;
+    line-height: 1.4;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 0;
+    border-top: none;
+}
+
+.btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 38px;
+    min-width: 90px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn i {
+    font-size: 12px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #8972e7 0%, #7b61e3 100%);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #9a85f0 0%, #8972e7 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(137, 114, 231, 0.25);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    background: linear-gradient(135deg, #7b61e3 0%, #6a50d2 100%);
+}
+
+.btn-secondary {
+    background: #ffffff;
+    color: #555;
+    border: 1px solid #e0e0e9;
+}
+
+.btn-secondary:hover {
+    background-color: #f8f9ff;
+    color: var(--color-primary);
+    border-color: #d8d8e9;
+    transform: translateY(-1px);
+}
+
+.email-item {
+    display: flex;
+    margin-top: 12px;
+    gap: 10px;
+    position: relative;
+}
+
+.email-item .form-control {
+    flex: 1;
+    margin: 0;
+    border-radius: 8px;
+    padding-right: 46px;
+    transition: all 0.3s ease;
+}
+
+.email-item .btn {
+    min-width: auto;
+    padding: 0 16px;
+    white-space: nowrap;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8972e7 0%, #7b61e3 100%);
+}
+
+.added-emails {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.email-tag {
+    background: linear-gradient(135deg, #f5f7ff 0%, #eef0ff 100%);
+    padding: 6px 12px 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #4a4a68;
+    font-weight: 500;
+    border: 1px solid #e8e8f5;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.email-tag:hover {
+    background-color: #e8eaff;
+    transform: translateY(-1px);
+}
+
+.remove-email {
+    background: none;
+    border: none;
+    color: #a0a0b1;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+}
+
+.remove-email:hover {
+    color: #ff4d4f;
+    background-color: #ffeceb;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        height: 95vh;
+    }
+    
+    .modal-body {
+        padding: 16px;
+    }
+    
+    .form-actions {
+        padding: 16px;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        min-width: 80px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.left-member-btn {
+    margin-right: 8px;
+    opacity: 0.8;
+    position: relative;
+    right: auto;
+    left: -5px;
+    transform: translateY(0);
+}
+
+.left-member-btn:hover {
+    background-color: rgba(137, 114, 231, 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+    color: var(--color-primary);
+}
+
+/* Member Addition Modal */
+.member-addition-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.member-addition-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    animation: modalFadeIn 0.3s;
+}
+
+.member-addition-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.member-addition-header h3 {
+    margin: 0;
+    color: var(--color-dark);
+    font-size: 1.3rem;
+}
+
+.member-addition-body {
+    margin-bottom: 20px;
+}
+
+.member-addition-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.email-item {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.participant-email {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.btn-add-email {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-add-email:hover {
+    background-color: #7b61e3;
+}
+
+.added-emails {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.email-tag {
+    background-color: #f0f0ff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.remove-email {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-email:hover {
+    color: #ff3366;
+}
+
+@keyframes modalFadeIn {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.project-member-btn:hover {
+    color: var(--color-primary);
+    background-color: rgba(137, 114, 231, 0.2);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.project-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.project-item-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/* Proje Düzenleme Modalı */
+.project-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.project-modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+    animation: modalFadeIn 0.3s;
+}
+
+.project-modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-dark);
+}
+
+.project-modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.project-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.project-form-group {
+    margin-bottom: 20px;
+}
+
+.project-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.project-form-group input,
+.project-form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.project-form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.project-form-group input:focus,
+.project-form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(137, 114, 231, 0.1);
+}
+
+.project-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.project-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-light);
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.project-tab.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.project-tab-content {
+    display: none;
+}
+
+.project-tab-content.active {
+    display: block;
+}
+
+.member-list {
+    margin-top: 15px;
+}
+
+.member-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-right: 10px;
+}
+
+.member-info {
+    flex: 1;
+}
+
+.member-name {
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.member-role {
+    font-size: 12px;
+    color: var(--color-light);
+}
+
+.member-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.member-action-btn {
+    background: none;
+    border: none;
+    color: var(--color-light);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.member-action-btn:hover {
+    color: var(--color-primary);
+    background-color: rgba(137, 114, 231, 0.1);
+}
+
+.add-member-form {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #7b61e0;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: var(--color-dark);
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}

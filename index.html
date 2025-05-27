@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collabio - Proje Yönetimi</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project-member.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -27,8 +28,11 @@
                 <button class="add-btn"><i class="fas fa-plus"></i></button>
             </div>
             <div class="project-item active">
-                <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
-                <span>Collabio</span>
+                <div class="project-item-content">
+                    <button class="project-member-btn left-member-btn" data-project-id="collabio" title="Katılımcı Ekle"><i class="fas fa-user-plus"></i></button>
+                    <img src="images/collabio-logo.png" alt="Collabio" class="project-icon">
+                    <span>Collabio</span>
+                </div>
             </div>
         </div>
 
@@ -300,6 +304,45 @@
         </div>
     </div>
 
+    <!-- Project Edit Modal -->
+    <div id="projectEditModal" class="modal" style="display: none; align-items: center; justify-content: center;">
+        <div class="modal-content" style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
+            <div class="modal-header">
+                <h2>Projeyi Düzenle</h2>
+                <span class="close" id="closeProjectEditModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="projectEditForm">
+                    <div class="form-group">
+                        <label for="projectName">Proje Adı</label>
+                        <input type="text" id="projectName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectDescription">Açıklama</label>
+                        <textarea id="projectDescription" class="form-control" rows="6" placeholder="Proje hakkında kısa bir açıklama yazın..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Üyeler</label>
+                        <div class="email-item">
+                            <input type="email" id="memberEmail" class="form-control" placeholder="Üye e-posta adresi girin">
+                            <button type="button" id="addMemberBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Ekle</button>
+                        </div>
+                        <div id="projectMembers" class="added-emails">
+                            <!-- Mevcut üyeler burada listelenecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions" style="margin-top: 20px;">
+                        <button type="button" id="cancelProjectEdit" class="btn btn-secondary">İptal</button>
+                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Sidebar Modal -->
     <div id="sidebarModal" class="modal sidebar-modal">
         <div class="modal-content">
@@ -378,6 +421,158 @@
     </div>
 
     <script src="app.js"></script>
+    <script src="project-member.js"></script>
+    <script>
+        // Proje düzenleme modalı
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectEditModal = document.getElementById('projectEditModal');
+            const closeProjectEditModal = document.getElementById('closeProjectEditModal');
+            const cancelProjectEdit = document.getElementById('cancelProjectEdit');
+            const projectEditForm = document.getElementById('projectEditForm');
+            const addMemberBtn = document.getElementById('addMemberBtn');
+            const memberEmailInput = document.getElementById('memberEmail');
+            const projectMembersContainer = document.getElementById('projectMembers');
+            const projectNameInput = document.getElementById('projectName');
+            const projectDescriptionInput = document.getElementById('projectDescription');
+            
+            // Mevcut proje bilgileri (örnek veri)
+            let currentProject = {
+                id: 'collabio',
+                name: 'Collabio',
+                description: 'Proje yönetim uygulaması',
+                members: []
+            };
+            
+            // Proje düzenleme butonlarına tıklama olayı ekle
+            document.querySelectorAll('.left-member-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openProjectEditModal();
+                });
+            });
+            
+            // Modalı aç
+            function openProjectEditModal() {
+                // Mevcut proje bilgilerini doldur
+                projectNameInput.value = currentProject.name;
+                projectDescriptionInput.value = currentProject.description || '';
+                
+                // Mevcut üyeleri yükle
+                loadProjectMembers();
+                
+                // Modalı göster
+                projectEditModal.style.display = 'flex';
+                document.body.classList.add('modal-open');
+            }
+            
+            // Modalı kapat
+            function closeProjectModal() {
+                projectEditModal.style.display = 'none';
+                document.body.classList.remove('modal-open');
+            }
+            
+            // Kapatma butonlarına tıklama olayı ekle
+            closeProjectEditModal.addEventListener('click', closeProjectModal);
+            cancelProjectEdit.addEventListener('click', closeProjectModal);
+            
+            // Dışarı tıklayınca kapat
+            window.addEventListener('click', function(e) {
+                if (e.target === projectEditModal) {
+                    closeProjectModal();
+                }
+            });
+            
+            // ESC tuşu ile kapat
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeProjectModal();
+                }
+            });
+            
+            // Üye ekleme işlevi
+            function addMember(email) {
+                if (email && !currentProject.members.includes(email)) {
+                    currentProject.members.push(email);
+                    loadProjectMembers();
+                    memberEmailInput.value = '';
+                } else if (currentProject.members.includes(email)) {
+                    alert('Bu e-posta adresi zaten ekli.');
+                }
+            }
+            
+            // Üyeleri yükle
+            function loadProjectMembers() {
+                projectMembersContainer.innerHTML = '';
+                
+                currentProject.members.forEach(email => {
+                    const memberTag = document.createElement('div');
+                    memberTag.className = 'email-tag';
+                    memberTag.innerHTML = `
+                        ${email}
+                        <button type="button" class="remove-email" data-email="${email}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    // Üyeyi kaldır butonuna tıklama olayı ekle
+                    const removeBtn = memberTag.querySelector('.remove-email');
+                    removeBtn.addEventListener('click', function() {
+                        const emailToRemove = this.getAttribute('data-email');
+                        currentProject.members = currentProject.members.filter(e => e !== emailToRemove);
+                        loadProjectMembers();
+                    });
+                    
+                    projectMembersContainer.appendChild(memberTag);
+                });
+            }
+            
+            // Form gönderimi
+            projectEditForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Proje bilgilerini güncelle
+                currentProject.name = projectNameInput.value.trim();
+                currentProject.description = projectDescriptionInput.value.trim();
+                
+                // Burada API çağrısı yapılabilir
+                console.log('Güncellenen proje:', currentProject);
+                
+                // Proje adını sayfada güncelle
+                const projectTitle = document.querySelector('.project-item.active .project-item-content span');
+                if (projectTitle) {
+                    projectTitle.textContent = currentProject.name;
+                }
+                
+                // Modalı kapat
+                closeProjectModal();
+                
+                // Başarı mesajı göster
+                alert('Proje başarıyla güncellendi!');
+            });
+            
+            // Üye ekle butonuna tıklama olayı ekle
+            addMemberBtn.addEventListener('click', function() {
+                const email = memberEmailInput.value.trim();
+                if (email) {
+                    addMember(email);
+                }
+            });
+            
+            // Enter tuşu ile üye ekle
+            memberEmailInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const email = this.value.trim();
+                    if (email) {
+                        addMember(email);
+                    }
+                }
+            });
+            
+            // Sayfa yüklendiğinde mevcut üyeleri yükle
+            loadProjectMembers();
+        });
+    </script>
     <script src="board.js"></script>
 </body>
 
